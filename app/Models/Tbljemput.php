@@ -19,6 +19,7 @@ class Tbljemput extends Model
         'updated_at',
     ];
     // protected $guard=['created_at'];
+    protected $with=['kurir','seller','antar'];
     /**
      * The primary key associated with the table.
      *
