@@ -58,14 +58,14 @@ class HomeController extends Controller
             $kurirs=$kurirs->sortByDesc(function($query){
                 return $query->jemputan->count();
             });
-            $sellers=Seller::all()->sortByDesc(function($query){
+            $sellers=Seller::with('jemputan')->get()->sortByDesc(function($query){
                 return $query->jemputan->count();
             })->take(4);
 
-            $total_jemput=Tbljemput::all()->count();
-            $total_antar=Tblantar::all()->count();
+            $total_jemput=Tbljemput::without('kurir','seller','antar')->count();
+            $total_antar=Tblantar::without('kurir','status', 'jemput')->count();
             
-            $total_seller=Seller::all()->count();
+            $total_seller=Seller::count();
             return view('db',compact('kurirs','sellers'))
             ->with('total_jemput', $total_jemput)
             ->with('total_antar', $total_antar)
@@ -119,15 +119,15 @@ class HomeController extends Controller
     public function json()
     {
         // return Datatables::of(Tbljemput::all())->make(true);
-        $data=Tbljemput::doesntHave('antar')
+        $data=Tbljemput::with('kurir')->doesntHave('antar')
         // ->orWhereHas("antar", function($q){ $q->where("status_id", 3); })
         ->get();
 
         // $totalbeluminput=Tbljemput::doesntHave('antar')->count();
         // $totalcancel=Tbljemput::WhereHas("antar", function($q){ $q->where("status_id", 3); })->count();
 
-        $totaljemput=Tbljemput::all()->count();
-        $totalantar=Tblantar::all()->count();
+        $totaljemput=Tbljemput::without('kurir','seller','antar')->count();
+        $totalantar=Tblantar::without('kurir','status', 'jemput')->count();
 
 
             return Datatables::of($data)
@@ -141,16 +141,17 @@ class HomeController extends Controller
                             return $row->kurir->name;
                     })
                     ->addColumn('status', function($row){
-                        $stt='<span class="badge badge-warning">Belum Input</span>';
-                        if(isset($row->antar))
-                        {
-                            if($row->antar->status->id==3)
-                                $stt='<span class="badge badge-danger">'.$row->antar->status->name.'</span>';
-                            else
-                                $stt='<span class="badge badge-info">'.$row->antar->status->name.'</span>';
-                        }
-                            return $stt;
-                            // return $row->antar->status->name??'-';
+                        return '<span class="badge badge-warning">Belum Input</span>';
+
+                        //$stt='<span class="badge badge-warning">Belum Input</span>';
+                        // if(isset($row->antar))
+                        // {
+                        //     if($row->antar->status->id==3)
+                        //         $stt='<span class="badge badge-danger">'.$row->antar->status->name.'</span>';
+                        //     else
+                        //         $stt='<span class="badge badge-info">'.$row->antar->status->name.'</span>';
+                        // }
+                        //     return $stt;
                     })
 
                     ->rawColumns(['id','status'])
@@ -165,7 +166,7 @@ class HomeController extends Controller
      */
     public function json_cancel()
     {
-        $data=Tbljemput::WhereHas("antar", function($q){ $q->where("status_id", 3); })->get();
+        $data=Tbljemput::with('kurir','antar')->WhereHas("antar", function($q){ $q->where("status_id", 3); })->get();
             return Datatables::of($data)
                     ->addIndexColumn()
 

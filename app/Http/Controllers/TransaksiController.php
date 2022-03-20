@@ -306,12 +306,10 @@ class TransaksiController extends Controller
     {
         if(Auth::user()->hasRole('Admin'))
         {
-            $jemputs = Tbljemput::orderByDesc('id')->orderBy('created_at','asc')->get();
-
             $statuses = Status::all();
             $sellers=Seller::all();
             $kurirs=User::whereHas("roles", function($q){ $q->where("name", "Kurir"); })->get();
-            return view('transaksi.index',compact('jemputs','statuses','kurirs','sellers'))
+            return view('transaksi.index',compact('statuses','kurirs','sellers'))
                 ->with('i', (request()->input('page', 1) - 1) * 5)
                 ->with('title', 'Transaksi');
         }
@@ -330,7 +328,7 @@ class TransaksiController extends Controller
         $dari=date('Y-m-d',strtotime($jemput_range[0]));
         $ke=date('Y-m-d',strtotime($jemput_range[1]));
 
-        $query = Tbljemput::whereDate('created_at','>',$dari)->whereDate('created_at','<=',$ke)->orderBy('created_at','asc');
+        $query = Tbljemput::with('kurir','antar','seller')->whereDate('created_at','>',$dari)->whereDate('created_at','<=',$ke)->orderBy('created_at','asc');
 
             if(request('filter_periode_antar')<>'')
             {
@@ -547,7 +545,7 @@ class TransaksiController extends Controller
         $kurirs=User::whereHas("roles", function($q){ $q->where("name", "Kurir"); })->get();
         $statuses=Status::get();
         // $transaksis_antar = Tblantar::where('status_id',1)
-        $transaksis_antar = Tblantar::where(function($query) use($kemarin){
+        $transaksis_antar = Tblantar::with('kurir','status', 'jemput')->where(function($query) use($kemarin){
             $query->whereDate('created_at','>=',$kemarin)
             ->orWhere('status_id',1);
         })
@@ -559,7 +557,7 @@ class TransaksiController extends Controller
         ->orderBy('updated_at','desc')->get();
 
         $transaksis_belum_antar=Tbljemput::doesntHave('antar')->get();
-        $jemputs=Tbljemput::has('antar')->orderBy('created_at','asc')->get();
+        $jemputs=Tbljemput::with('antar')->has('antar')->orderBy('created_at','asc')->get();
         foreach($jemputs as $jemput)
         {
             if($jemput->antar->status_id==1)
@@ -575,8 +573,8 @@ class TransaksiController extends Controller
         ->orderBy('created_at','asc')->get();
 
         //olah transaksi jemput yang cancel
-        $transaksis_jemput_cancel=Tbljemput:://where('user_id',$user_id)
-        Where(function($query) use($user_id) {
+        $transaksis_jemput_cancel=Tbljemput::with('antar')//where('user_id',$user_id)
+        ->Where(function($query) use($user_id) {
             $query->where('user_id', $user_id)
                   ->orWhereHas('antar', function($g) use($user_id){
                     $g->where('user_id',$user_id);

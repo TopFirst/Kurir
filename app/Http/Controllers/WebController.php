@@ -49,7 +49,7 @@ class WebController extends Controller
         'web_galleries','web_client','web_testimoni','web_testimoni_head',
         'web_contact','web_top_info'))
         ->with('total_kurir', User::all()->count())
-        ->with('total_transaksi', Tbljemput::all()->count())
+        ->with('total_transaksi', Tbljemput::without('kurir','seller','antar')->count())
         ->with('total_pelanggan', Seller::all()->count());
 
     }

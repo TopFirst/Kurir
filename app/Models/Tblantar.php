@@ -21,7 +21,7 @@ class Tblantar extends Model
 
     ];
     // protected $guard=['created_at'];
-    protected $with=['kurir','status','jemput'];
+    // protected $with=['kurir','status', 'jemput'];
     /**
      * The primary key associated with the table.
      *
