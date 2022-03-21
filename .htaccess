@@ -1,4 +1,8 @@
 <IfModule mod_rewrite.c>
 RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>
+
+php_value max_execution_time 120
