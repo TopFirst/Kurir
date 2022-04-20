@@ -560,8 +560,13 @@ class TransaksiController extends Controller
         $jemputs=Tbljemput::with('antar')->has('antar')->orderBy('created_at','asc')->get();
         foreach($jemputs as $jemput)
         {
-            if($jemput->antar->status_id==1)
-                $transaksis_belum_antar->push($jemput);
+            if(!is_null($jemput->antar))
+            {
+                if($jemput->antar->status_id==1)
+                {
+                    $transaksis_belum_antar->push($jemput);
+                }
+            }
         }
 
         //olah transaksi jemput
