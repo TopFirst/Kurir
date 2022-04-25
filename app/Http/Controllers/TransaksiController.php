@@ -557,16 +557,12 @@ class TransaksiController extends Controller
         ->orderBy('updated_at','desc')->get();
 
         $transaksis_belum_antar=Tbljemput::doesntHave('antar')->get();
-        $jemputs=Tbljemput::with('antar')->has('antar')->orderBy('created_at','asc')->get();
-        foreach($jemputs as $jemput)
+        $transaksiProcess=Tbljemput::with('antar')->whereHas('antar', function($g){
+            $g->where('status_id',1);
+        })->orderBy('created_at','asc')->get();
+        foreach($transaksiProcess as $tp)
         {
-            if(!is_null($jemput->antar))
-            {
-                if($jemput->antar->status_id==1)
-                {
-                    $transaksis_belum_antar->push($jemput);
-                }
-            }
+            $transaksis_belum_antar->push($tp);
         }
 
         //olah transaksi jemput
