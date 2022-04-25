@@ -557,13 +557,16 @@ class TransaksiController extends Controller
         ->orderBy('updated_at','desc')->get();
 
         $transaksis_belum_antar=Tbljemput::doesntHave('antar')->get();
-        $transaksi_prosess=Tbljemput::with('antar')->WhereHas('antar', function($g){
-            $satu=1;
-            $g->where('status_id',$satu);
-        })->orderBy('created_at','asc')->get();
-        foreach($transaksi_prosess as $transaksi_proses)
+        $jemputs=Tbljemput::with('antar')->has('antar')->orderBy('created_at','asc')->get();
+        foreach($jemputs as $jemput)
         {
-            $transaksis_belum_antar->push($transaksi_proses);
+            if(!is_null($jemput->antar))
+            {
+                if($jemput->antar->status_id==1)
+                {
+                    $transaksis_belum_antar->push($jemput);
+                }
+            }
         }
 
         //olah transaksi jemput
@@ -714,14 +717,14 @@ class TransaksiController extends Controller
         // $display=collect([$request->tbljemput_id]);
         // $display->dd();
 
-        $jemput=Tbljemput::find($request->tbljemput_id);
+        $jemput=Tbljemput::with('antar')->find($request->tbljemput_id);
 
         if($jemput->antar)
         {
             $antaran=Tblantar::find($jemput->id);
             $antaran->user_id=Auth::user()->id;
-            // $antaran->updated_at=date('Y-m-d');
-            $antaran->created_at=Carbon::now();
+            //$antaran->created_at=Carbon::now();
+            $antaran->updated_at=Carbon::now();
             $antaran->save();
             return redirect()->route('transaksi.index')
             ->with('success','transaksi kurir berhasil diganti');
@@ -734,7 +737,10 @@ class TransaksiController extends Controller
                 'tbljemput_id'=>$jemput->id,
                 'status_id'=>1,
                 'talangan'=>$jemput->talangan,
-                'ongkir'=> $this->ongkir_bersih($jemput->ongkir)
+                'ongkir'=> $this->ongkir_bersih($jemput->ongkir),
+                'created_at'=> Carbon::now(),
+                'updated_at'=> Carbon::now()
+
                 // 'ongkir'=>($jemput->ongkir)-(0.2*$jemput->ongkir),
             ]);
             // return redirect()->route('transaksi.index')
