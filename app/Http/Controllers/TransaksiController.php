@@ -719,8 +719,7 @@ class TransaksiController extends Controller
         {
             $antaran=Tblantar::find($jemput->id);
             $antaran->user_id=Auth::user()->id;
-            //$antaran->created_at=Carbon::now();
-            $antaran->updated_at=Carbon::now();
+            $antaran->created_at=Carbon::now();
             $antaran->save();
             return redirect()->route('transaksi.index')
             ->with('success','transaksi kurir berhasil diganti');
