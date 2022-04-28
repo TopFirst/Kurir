@@ -40,7 +40,7 @@
 		        <div class="form-group">
 		            <strong>HP Seller:</strong>
 					<div class="input-group">
-					    <input type="text" name="hp_seller" class="form-control hp" placeholder="No. telepon" autocomplete="off" role="combobox" list="seller_list" aria-autocomplete="list" required>
+					    <input type="text" name="hp_seller" class="form-control hp nokoma" placeholder="No. telepon" autocomplete="off" role="combobox" list="seller_list" aria-autocomplete="list" required>
 					    <div class="input-group-append d-none" id="terdaftar">
 					        <span class="input-group-text bg-success" id="id_seller"></span>
 					    </div>
@@ -56,14 +56,14 @@
 		    <div class="col-xs-12 col-sm-12 col-md-12">
 		        <div class="form-group">
 		            <strong>Alamat:</strong>
-		            <textarea name="deskripsi" class="form-control" placeholder="masukkan deskripsi paket" rows="3" required></textarea>
+		            <textarea name="deskripsi" class="form-control nokoma" placeholder="masukkan deskripsi paket" rows="3" required></textarea>
 		        </div>
 		    </div>
             <hr>
             <div class="col-xs-12 col-sm-12 col-md-12">
 		        <div class="form-group">
 		            <strong>Talangan:</strong>
-		            <input type="number" min="0" name="talangan" class="form-control" placeholder="talangan" step="1" required>
+		            <input type="number" min="0" name="talangan" class="form-control" placeholder="talangan" onkey step="1" required>
 		        </div>
 		    </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
@@ -101,6 +101,11 @@
 				}
 			});
 			//alert("The text has been changed." + this.value);
+		});
+		//gak boleh ada character '
+		$('.nokoma').keydown(function(e) {
+			if(e.keyCode==222)
+				return false;
 		});
 	});
 </script>
