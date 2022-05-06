@@ -55,12 +55,14 @@ class HomeController extends Controller
 
             $kurirs=User::whereHas("roles", function($q){ $q->where("name", "Kurir"); })->get();
             $total_kurir=$kurirs->count();
-            $kurirs=$kurirs->sortByDesc(function($query){
-                return $query->jemputan->count();
-            });
             $sellers=Seller::with('jemputan')->get()->sortByDesc(function($query){
                 return $query->jemputan->count();
             })->take(4);
+            
+            $kurirs=$kurirs->sortByDesc(function($query){
+                return $query->jemputan->count();
+            });
+
 
             $total_jemput=Tbljemput::without('kurir','seller','antar')->count();
             $total_antar=Tblantar::without('kurir','status', 'jemput')->count();
