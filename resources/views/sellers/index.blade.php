@@ -85,6 +85,7 @@
             responsive: false,
             serverSide: false,
             "paging":   false,
+            "order": [[ 4, "desc" ]]
 
             // "dom": "<'row'<'col-sm-6'l><'col-sm-6'f>>",
         });

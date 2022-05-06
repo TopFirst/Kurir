@@ -32,10 +32,7 @@ class SellerController extends Controller
     {
         $sellers=DB::table('sellers')
         ->select('sellers.*', DB::raw('(SELECT count(*) FROM tbljemputs WHERE tbljemputs.hp_seller = sellers.hp) as jumlah'))
-        ->orderBydesc('jumlah')
         ->get();
-        //$sellers = Seller::all();//->paginate(5);
-        // $sellers->dd();
         return view('sellers.index',compact('sellers'))
         ->with('title','Seller');
     }
