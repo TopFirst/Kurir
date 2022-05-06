@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Exports\SellerExport;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
+use DB;
 
 class SellerController extends Controller
 {
@@ -29,7 +30,11 @@ class SellerController extends Controller
      */
     public function index()
     {
-        $sellers = Seller::all();//->paginate(5);
+        $sellers=DB::table('sellers')
+        ->select('sellers.*', DB::raw('(SELECT count(*) FROM tbljemputs WHERE tbljemputs.hp_seller = sellers.hp) as jumlah'))
+        ->orderBydesc('jumlah')
+        ->get();
+        //$sellers = Seller::all();//->paginate(5);
         // $sellers->dd();
         return view('sellers.index',compact('sellers'))
         ->with('title','Seller');

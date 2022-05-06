@@ -47,15 +47,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($sellers->sortByDesc(function($query){
-                                    return $query->jemputan->count();
-                                }) as $seller)
+                                @foreach($sellers as $seller)
                                 <tr>
                                     <td>{{ $seller->id }}</td>
                                     <td>{{ $seller->nama??'-' }}</td>
                                     <td>{{ $seller->hp }}</td>
                                     <td>{{ $seller->deskripsi??'-' }}</td>
-                                    <td>{{ $seller->jemputan->count() }}</td>
+                                    <td>{{ $seller->jumlah }}</td>
                                     <td class="justify-content-between">
                                         @can('transaksi-edit')
                                         <a href="{{ route('seller.edit',$seller->id) }}" class="text-info"><i class="fas fa-edit"></i></a>
