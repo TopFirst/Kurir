@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
 use Facade\FlareClient\Http\Exceptions\NotFound;
+use DB;
 
 class HomeController extends Controller
 {
@@ -55,10 +56,12 @@ class HomeController extends Controller
 
             $kurirs=User::whereHas("roles", function($q){ $q->where("name", "Kurir"); })->get();
             $total_kurir=$kurirs->count();
-            $sellers=Seller::with('jemputan')->get()->sortByDesc(function($query){
-                return $query->jemputan->count();
-            })->take(4);
-            
+
+            $sellers=DB::table('sellers')
+            ->select('sellers.*', DB::raw('(SELECT count(*) FROM tbljemputs WHERE tbljemputs.hp_seller = sellers.hp) as jumlah'))
+            ->orderBydesc('jumlah')
+            ->take(4)->get();
+
             $kurirs=$kurirs->sortByDesc(function($query){
                 return $query->jemputan->count();
             });

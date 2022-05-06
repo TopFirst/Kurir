@@ -175,7 +175,7 @@
                                       <li>
                                           <img src="{{ asset('dist/img/pos.png') }}" alt="Foto Seller">
                                           <a class="users-list-name" href="#">{{ $item->nama??$item->hp }}</a>
-                                          <span class="badge badge-info">{{ $item->jemputan->count() }}</span>
+                                          <span class="badge badge-info">{{ $item->jumlah}}</span>
                                       </li>
                                   @endforeach
                               </ul>
