@@ -611,12 +611,14 @@ class TransaksiController extends Controller
         $weeknumber2=Carbon::now()->weekOfYear;
         $weeknumber=sprintf("%02d", $weeknumber2);
         $id_baru=Str::of(date('y'))->append($weeknumber)->append('-'. Auth::user()->id)->append('-'. $this->str_random());
+        $ongkir_dasar = AppConfig::where('slug','default-ongkir')->first();
         while(Tbljemput::where('id',$id_baru)->exists())
         {
             $id_baru=Str::of(date('y'))->append(date('m'))->append('-'. $this->str_random());
         }
         return view('transaksi.create',compact('kurirs','sellers'))
-        ->with('id_baru', $id_baru);
+        ->with('id_baru', $id_baru)
+        ->with('ongkir_dasar', $ongkir_dasar->parameter_value);
     }
     /**
      * Generate a "random" alpha-numeric string.

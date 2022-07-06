@@ -90,6 +90,12 @@ class WebSeeder extends Seeder
         'parameter_value' => '2',
         'parameter_unit' => 'Rb',
         ]);
+       $default_ongkir = AppConfig::create([
+        'slug' => 'default-ongkir',
+        'parameter_name' => 'Ongkir Dasar',
+        'parameter_value' => '10',
+        'parameter_unit' => 'Rb',
+        ]);
 
     }
 }

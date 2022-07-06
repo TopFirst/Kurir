@@ -70,8 +70,13 @@
 		        <div class="form-group">
 		            <strong>Ongkir:</strong>
 					<select name="ongkir" class="form-control">
+
+					@for($i=5;$i<=9;$i++) 
+						<option value="{{ $i }}" {{$i==$ongkir_dasar?"selected":""}}>{{ $i }}</option>
+					@endfor
+
 					    @for($i=10;$i<=100;$i+=5) 
-						<option value="{{ $i }}">{{ $i }}</option>
+						<option value="{{ $i }}" {{$i==$ongkir_dasar?"selected":""}}>{{ $i }}</option>
 					        @endfor
 					</select>
 		        </div>
