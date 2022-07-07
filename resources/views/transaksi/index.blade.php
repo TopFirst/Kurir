@@ -341,6 +341,12 @@
                             d.filter_status=$('#filter_status').val();
                             d.filter_periode_antar=$('#filter_periode_antar').val();
                         },
+                beforeSend: function (xhr) {
+                            $("#loading").show();
+                        },
+                complete: function () {
+                            $("#loading").hide();
+                        },
                 "error" : function(y){
                             console.log(y);
                         }

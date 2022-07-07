@@ -25,9 +25,37 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <style>
+        #loading {
+            position: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0.7;
+            background-color: #fff;
+            z-index: 99;
+        }
+
+        #loading-image {
+            z-index: 100;
+        }
+        div.dom_wrapper {
+            position: sticky; /* Fix to the top */
+            top: 0;
+            padding: 5px;
+            background: rgba(255, 255, 255, 1); /* hide the scrolling table */
+        }
+    </style>
   @stack('css')
 </head>
 <body class="hold-transition sidebar-mini">
+<div id="loading">
+        <img id="loading-image" src="{{ url('dist/img/Rhombus.gif') }}" alt="Loading..." />
+    </div>
 <div class="wrapper">
 
   <!-- Navbar -->
@@ -135,6 +163,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
 <!-- App scripts -->
 @stack('scripts')
+<script>
+    $(function () {
+        $(window).on('load', function () {
+            $('#loading').hide();
+        })
+    })
+</script>
 
 </body>
 </html>
