@@ -9,6 +9,7 @@ use App\Models\Seller;
 use App\Models\Tblantar;
 use App\Models\Tbljemput;
 use App\Models\Transaksi;
+use App\Models\AppConfig;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -40,6 +41,8 @@ class HomeController extends Controller
         {
         $weeknumber2=Carbon::now()->weekOfYear;
         $weeknumber=sprintf("%02d", $weeknumber2);
+        $ongkir_dasar = AppConfig::where('slug','default-ongkir')->first();
+
         $id_baru=Str::of(date('y'))->append($weeknumber)->append('-'. Auth::user()->id)->append('-'. $this->str_random());
             while(Tbljemput::where('id',$id_baru)->exists())
             {
@@ -48,7 +51,8 @@ class HomeController extends Controller
             $sellers=Seller::all();
             return view('transaksi/create',compact('kurirs','sellers'))
             ->with('title', 'Kurir')
-            ->with('id_baru', $id_baru);
+            ->with('id_baru', $id_baru)
+            ->with('ongkir_dasar', $ongkir_dasar->parameter_value);
         }
         elseif(Auth::user()->hasRole('Admin'))
         {
