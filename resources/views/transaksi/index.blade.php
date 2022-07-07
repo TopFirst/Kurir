@@ -7,7 +7,7 @@
     with position:fixed. Width, height, top and left speak
     for themselves. Background we set to 80% white with
     our animation centered, and no-repeating */
-    .modal {
+    /* .modal {
         display:    none;
         position:   fixed;
         z-index:    1000;
@@ -19,19 +19,19 @@
                     url('http://i.stack.imgur.com/FhHRx.gif') 
                     50% 50% 
                     no-repeat;
-    }
+    } */
 
     /* When the body has the loading class, we turn
     the scrollbar off with overflow:hidden */
-    body.loading .modal {
+    /* body.loading .modal {
         overflow: hidden;   
-    }
+    } */
 
     /* Anytime the body has the loading class, our
     modal element will be visible */
-    body.loading .modal {
+    /* body.loading .modal {
         display: block;
-    }
+    } */
 </style>
     
 @endpush
@@ -261,12 +261,12 @@
 <!-- default scripts -->
 <script type="text/javascript">
     //untuk loading
-    $body = $("body");
+    // $body = $("body");
   
-    $(document).on({
-        ajaxStart: function() { $body.addClass("loading");    },
-        ajaxStop: function() { $body.removeClass("loading"); }    
-    });
+    // $(document).on({
+    //     ajaxStart: function() { $body.addClass("loading");    },
+    //     ajaxStop: function() { $body.removeClass("loading"); }    
+    // });
   </script>
 
 <!-- Select2 -->
@@ -332,7 +332,7 @@
             "dom": "<t>",
             // ajax: "{{ route('transaksi.json') }}",
             ajax: {
-                "url"  : "{{ route ('transaksi.json') }}", 
+                "url"  : "{{ route ('transaksi.json') }}",
                 "data" : function (d) {
                             d.filter_periode = $('#filter_periode').val();
                             d.filter_seller=$('#filter_seller').val();

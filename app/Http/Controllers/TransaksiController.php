@@ -153,7 +153,6 @@ class TransaksiController extends Controller
             'hp_seller' => 'required',
             'ongkir' => 'required',
         ]);
-    
         $transaksi->update($request->all());
     
         if (request('user_id_antar'))
@@ -164,7 +163,7 @@ class TransaksiController extends Controller
                 $antar->user_id=request('user_id_antar');
                 $antar->created_at=request('tgl_antar');
                 $antar->talangan=$transaksi->talangan;
-                
+                $antar->ongkir=$this->ongkir_bersih($transaksi->ongkir);
                 if(request('id_status'))
                 {
                     $antar->status_id=request('id_status');
@@ -181,8 +180,6 @@ class TransaksiController extends Controller
                     'status_id'=>request('id_status')??1,
                     'talangan'=>$transaksi->talangan,
                     'ongkir'=>$this->ongkir_bersih($transaksi->ongkir)
-                    // 'ongkir'=>($transaksi->ongkir)-(0.2*$transaksi->ongkir),
-
                 ]);
             }
         }

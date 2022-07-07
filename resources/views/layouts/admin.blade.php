@@ -165,9 +165,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 @stack('scripts')
 <script>
     $(function () {
-        $(window).on('load', function () {
-            $('#loading').hide();
-        })
+      $('#loading').hide();
+        // $(window).on('load', function () {
+        //     $('#loading').hide();
+        // })
     })
 </script>
 
