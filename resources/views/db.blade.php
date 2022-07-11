@@ -257,6 +257,8 @@ var cancel_table;
             processing: false,
             responsive: false,
             serverSide: true,
+            scrollY: '350px',
+            scrollCollapse: true,
             dom:"<t>",
             ajax: "{{ route('home.json') }}",
             columns: [
@@ -272,6 +274,8 @@ var cancel_table;
             processing: false,
             responsive: false,
             serverSide: true,
+            scrollY: '350px',
+            scrollCollapse: true,
             dom:"<t>",
             ajax: "{{ route('home.json_cancel') }}",
             columns: [

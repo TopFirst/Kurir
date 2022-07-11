@@ -69,7 +69,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
 		        <div class="form-group">
 		            <strong>Ongkir:</strong>
-					<select name="ongkir" class="form-control">
+					<select name="ongkir" id="ongkir" class="form-control">
 
 					@for($i=5;$i<=9;$i++) 
 						<option value="{{ $i }}" {{$i==$ongkir_dasar?"selected":""}}>{{ $i }}</option>
@@ -78,7 +78,11 @@
 					    @for($i=10;$i<=100;$i+=5) 
 						<option value="{{ $i }}" {{$i==$ongkir_dasar?"selected":""}}>{{ $i }}</option>
 					        @endfor
+						<option value="0">Custom</option>
+
 					</select>
+		            <input type="number" min="5" max="100" id="custom_ongkir" name="custom_ongkir" value="{{$ongkir_dasar}}" class="form-control" placeholder="custom ongkir.." onkey step="1">
+
 		        </div>
 		    </div>
 		    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
@@ -90,6 +94,8 @@
 @push('scripts')
 <script type="text/javascript">
 	$(function () {
+		$('#custom_ongkir').hide();
+
 		//cek seller 
 		$(".hp").change(function(){
 			$.ajax({
@@ -111,6 +117,13 @@
 		$('.nokoma').keydown(function(e) {
 			if(e.keyCode==222)
 				return false;
+		});
+		$('#ongkir').on('change', function() {
+			if(this.value==0)
+			$('#custom_ongkir').show();
+			else
+			$('#custom_ongkir').hide();
+
 		});
 	});
 </script>

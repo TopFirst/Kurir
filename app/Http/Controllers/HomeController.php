@@ -143,7 +143,14 @@ class HomeController extends Controller
                     ->addIndexColumn()
 
                     ->editColumn('id', function($row){
-                        $btn = '<a href="'.route('transaksi.show',$row->id).'">'.$row->id.'</a>';
+                        //$btn = '<a href="'.route('transaksi.show',$row->id).'">'.$row->id.'</a>';
+                        $btn = '<div class="row justify-content-between" style="width:80px;">
+                            <a href="'.route('transaksi.show',$row->id).'">'.$row->id.'</a>
+                            <div class="form-group">
+                            <a href="'.route('transaksi.edit',$row->id).'" class="text text-info"><i class="fa fa-edit"></i></a>
+                            <a href="#" class="text text-danger hapus" data-id="'. $row->id .'"><i class="fa fa-trash"></i></a>
+                            </div>
+                            </div>';
                            return $btn;
                     })
                     ->addColumn('kurirjemput', function($row){
@@ -151,18 +158,7 @@ class HomeController extends Controller
                     })
                     ->addColumn('status', function($row){
                         return '<span class="badge badge-warning">Belum Input</span>';
-
-                        //$stt='<span class="badge badge-warning">Belum Input</span>';
-                        // if(isset($row->antar))
-                        // {
-                        //     if($row->antar->status->id==3)
-                        //         $stt='<span class="badge badge-danger">'.$row->antar->status->name.'</span>';
-                        //     else
-                        //         $stt='<span class="badge badge-info">'.$row->antar->status->name.'</span>';
-                        // }
-                        //     return $stt;
                     })
-
                     ->rawColumns(['id','status'])
                     ->with('totaljemput',$totaljemput)
                     ->with('totalantar',$totalantar)
@@ -180,7 +176,14 @@ class HomeController extends Controller
                     ->addIndexColumn()
 
                     ->editColumn('id', function($row){
-                        $btn = '<a href="'.route('transaksi.show',$row->id).'">'.$row->id.'</a>';
+                        //$btn = '<a href="'.route('transaksi.show',$row->id).'">'.$row->id.'</a>';
+                        $btn = '<div class="row justify-content-between" style="width:80px;">
+                            <a href="'.route('transaksi.show',$row->id).'">'.$row->id.'</a>
+                            <div class="form-group">
+                            <a href="'.route('transaksi.edit',$row->id).'" class="text text-info"><i class="fa fa-edit"></i></a>
+                            <a href="#" class="text text-danger hapus" data-id="'. $row->id .'"><i class="fa fa-trash"></i></a>
+                            </div>
+                            </div>';
                            return $btn;
                     })
                     ->addColumn('kurirjemput', function($row){
@@ -198,7 +201,6 @@ class HomeController extends Controller
                             return $stt;
                             // return $row->antar->status->name??'-';
                     })
-
                     ->rawColumns(['id','status'])
                     ->make(true);
     }

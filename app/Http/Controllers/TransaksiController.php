@@ -22,6 +22,8 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 
+use Illuminate\Support\Facades\Redirect;
+
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use function PHPUnit\Framework\isNull;
@@ -183,8 +185,9 @@ class TransaksiController extends Controller
                 ]);
             }
         }
-        return redirect()->route('transaksi.admin')
-                        ->with('success','transaksi berhasil diperbarui');
+        return Redirect::to(url()->previous());
+        // return redirect()->previous()
+        //                 ->with('success','transaksi berhasil diperbarui');
     }
     /**
      * Backup transaksi, pindahkan data ke tabel backup
@@ -375,10 +378,17 @@ class TransaksiController extends Controller
         $totalongkir=$dat->sum('ongkir');
         $jmldata=$dat->count();
 
+        $ongkirBersih=0;
+        foreach($dat as $d)
+        {
+            $ongkirBersih += $this->ongkir_bersih($d['ongkir']);
+        }
+
         $jemputan=$totaltalangan-$totalongkir;
-        $antaran=$jemputan+($jmldata * 2);
+        // $antaran=$jemputan+($jmldata * 2);
+        $antaran=$jemputan + $ongkirBersih;
         
-        $grand_total=$antaran-$jemputan;
+        $grand_total=round($antaran-$jemputan,2);
 
         return Datatables::of($query)
             ->addIndexColumn()
@@ -665,8 +675,8 @@ class TransaksiController extends Controller
         //     $ongkir_baru,
         // ]);
         // $display->dd();
-
-        return $ongkir_baru;
+        
+        return round($ongkir_baru, 2);
     }
 
     /**
@@ -686,6 +696,8 @@ class TransaksiController extends Controller
             'talangan' => 'required',
         ]);
         $input = $request->all();
+        if($input['ongkir']==0)
+            $input['ongkir']=$input['custom_ongkir'];
         $input['user_id']=$request->user_id??Auth::user()->id;
         //simpan seller baru jika no belum tersimpan
         if(!Seller::where('hp',$request->hp_seller)->exists())
