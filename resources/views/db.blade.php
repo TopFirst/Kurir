@@ -257,7 +257,8 @@ var cancel_table;
             processing: false,
             responsive: false,
             serverSide: true,
-            scrollY: '350px',
+            paging:false,
+            scrollY: '500px',
             scrollCollapse: true,
             dom:"<t>",
             ajax: "{{ route('home.json') }}",
@@ -274,7 +275,8 @@ var cancel_table;
             processing: false,
             responsive: false,
             serverSide: true,
-            scrollY: '350px',
+            paging:false,
+            scrollY: '500px',
             scrollCollapse: true,
             dom:"<t>",
             ajax: "{{ route('home.json_cancel') }}",
@@ -306,7 +308,7 @@ var cancel_table;
             // console.log(time);
             otable.draw();
             cancel_table.draw();
-        }, 10000); //300000 MS == 5 minutes
+        }, 30000); //300000 MS == 5 minutes
 
     });
 </script>
