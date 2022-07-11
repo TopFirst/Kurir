@@ -50,6 +50,8 @@
                     <!-- /.card-header -->
                     <div class="card-body">
                         <div class="row">
+                        <input type="hidden" name="url" value="{{$url}}"  />
+
                             <div class="col-md-12">
                                 <!-- Tanggal Jemput -->
                                 <div class="col-xs-12 col-sm-12 col-md-12">

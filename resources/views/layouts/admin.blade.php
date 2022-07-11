@@ -122,6 +122,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
+            @if ($message = Session::get('success'))
+                <div class="alert alert-success">
+                    <p>{{ $message }}</p>
+                </div>
+            @elseif ($message = Session::get('failed'))
+                <div class="alert alert-warning">
+                    <p>{{ $message }}</p>
+                </div>
+            @endif
       @yield('container')
     
   </div>

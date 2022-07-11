@@ -135,7 +135,8 @@ class TransaksiController extends Controller
         $statuses=Status::all();
 
         return view('transaksi.edit',compact('transaksi','kurirs','statuses'))
-        ->with('title','Edit Transaksi');
+        ->with('title','Edit Transaksi')
+        ->with('url',url()->previous());
     }
     
     /**
@@ -154,6 +155,7 @@ class TransaksiController extends Controller
             'deskripsi' => 'required',
             'hp_seller' => 'required',
             'ongkir' => 'required',
+            'url' => 'required',
         ]);
         $transaksi->update($request->all());
     
@@ -185,7 +187,9 @@ class TransaksiController extends Controller
                 ]);
             }
         }
-        return Redirect::to(url()->previous());
+        return Redirect::to(request('url'))
+                         ->with('success','transaksi berhasil diperbarui');
+
         // return redirect()->previous()
         //                 ->with('success','transaksi berhasil diperbarui');
     }
