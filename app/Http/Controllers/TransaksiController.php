@@ -121,7 +121,9 @@ class TransaksiController extends Controller
     public function show(Tbljemput $transaksi)
     {
         return view('transaksi.show',compact('transaksi'))
-        ->with('title','Detail Pengguna');
+        ->with('title','Detail Pengguna')
+        ->with('url',url()->previous());
+
     }
     /**
      * Show the form for editing the specified resource.
@@ -382,13 +384,14 @@ class TransaksiController extends Controller
         $totalongkir=$dat->sum('ongkir');
         $jmldata=$dat->count();
 
-        $ongkirBersih=0;
+        $ongkirKurir=0;
         foreach($dat as $d)
         {
-            $ongkirBersih += $this->ongkir_bersih($d['ongkir']);
+            $ongkirKurir += $this->ongkir_bersih($d['ongkir']);
         }
 
         $jemputan=$totaltalangan-$totalongkir;
+        $ongkirBersih=$totalongkir-$ongkirKurir;
         // $antaran=$jemputan+($jmldata * 2);
         $antaran=$jemputan + $ongkirBersih;
         

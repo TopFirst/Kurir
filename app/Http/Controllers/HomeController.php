@@ -146,10 +146,7 @@ class HomeController extends Controller
                         //$btn = '<a href="'.route('transaksi.show',$row->id).'">'.$row->id.'</a>';
                         $btn = '<div class="row justify-content-between" style="width:80px;">
                             <a href="'.route('transaksi.show',$row->id).'">'.$row->id.'</a>
-                            <div class="form-group">
                             <a href="'.route('transaksi.edit',$row->id).'" class="text text-info"><i class="fa fa-edit"></i></a>
-                            <a href="#" class="text text-danger hapus" data-id="'. $row->id .'"><i class="fa fa-trash"></i></a>
-                            </div>
                             </div>';
                            return $btn;
                     })
@@ -179,10 +176,7 @@ class HomeController extends Controller
                         //$btn = '<a href="'.route('transaksi.show',$row->id).'">'.$row->id.'</a>';
                         $btn = '<div class="row justify-content-between" style="width:80px;">
                             <a href="'.route('transaksi.show',$row->id).'">'.$row->id.'</a>
-                            <div class="form-group">
                             <a href="'.route('transaksi.edit',$row->id).'" class="text text-info"><i class="fa fa-edit"></i></a>
-                            <a href="#" class="text text-danger hapus" data-id="'. $row->id .'"><i class="fa fa-trash"></i></a>
-                            </div>
                             </div>';
                            return $btn;
                     })

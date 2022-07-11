@@ -67,7 +67,7 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer clearfix">
-                        <a href="{{ route('transaksi.admin') }}" class="btn btn-default">Back</a>
+                        <a href="{{ $url }}" class="btn btn-default">Back</a>
                     </div>
                 </div>
                 <!-- /.card -->
