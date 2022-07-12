@@ -813,7 +813,7 @@ class TransaksiController extends Controller
         $transaksi->delete();
         // return redirect()->route($rute)
         //                 ->with('success','Transaksi deleted successfully');
-        return redirect()->route('transaksi.admin')
+        return redirect()->back()
         ->with('success','transaksi berhasil dihapus');
         // return redirect()->back()->with('success','Transaksi berhasil dihapus');
     }
