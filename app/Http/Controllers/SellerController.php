@@ -46,7 +46,16 @@ class SellerController extends Controller
         return Excel::download(new SellerExport,'seller.xlsx');
     }
     
-        
+     /**
+     * Halaman tambah seller baru 
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('sellers.create')
+        ->with('title', 'Tambah Seller Baru');
+    }    
     /**
      * Store a newly created resource in storage.
      *

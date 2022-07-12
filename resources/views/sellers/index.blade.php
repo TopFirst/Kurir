@@ -29,6 +29,7 @@
                         <h3 class="card-title">Daftar Seller</h3>
                         <div class="card-tools">
                             <a href="{{ route('seller.exportseller') }}" class="btn btn-sm btn-info"><i class="far fa-file-excel"></i> Export ke Excel</a>
+                            <a href="{{ route('seller.create') }}" class="btn btn-sm btn-info"><i class="fas fa-plus"></i> Tambah Seller</a>
                         </div>
                     </div>
                     <!-- /.card-header -->
