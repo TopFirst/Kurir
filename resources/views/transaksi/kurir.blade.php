@@ -246,6 +246,18 @@
                                                                     @endforeach
                                                                 </select>
                                                             </div>
+                                                                <div class="row">
+                                                                    <div class="col-2"> Seller</div> 
+                                                                    <strong id="seller_penjemputan">: -</strong>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-2">Deskripsi</div>  
+                                                                    <strong id="deskripsi_penjemputan">: -</strong>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-2">Talangan</div> 
+                                                                    <strong id="talangan_penjemputan">: -</strong>
+                                                                </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -617,6 +629,33 @@
         $('#reservationdate').on('dp.change', function(e){ 
             var formatedValue = e.date.format(e.date._f);
             console.log(formatedValue);
+        });
+
+        $('#tbljemput_id').on('change', function(){ 
+            $.ajax({
+                            // method:"POST",
+                            url: "{{ route ('transaksi.GetJemput') }}",
+                            data : {
+                                    id : this.value
+                                },
+                            // dataType: 'json',
+                            success: function(data) {
+                                console.log(data);
+                                 var dat= data.data;
+                                if(data.success){ 
+                                    var talangan=dat.talangan + "(" + dat.ongkir + ")";
+                                    $('#seller_penjemputan').text(": " + dat.hp_seller);
+                                    $('#deskripsi_penjemputan').text(": " + dat.deskripsi);
+                                    $('#talangan_penjemputan').text(": " + talangan);
+                                }
+                                
+                            },
+                            error: function(jqXHR, textStatus, errorThrown){
+                                var responseText = jQuery.parseJSON(jqXHR.responseText);
+                                console.error(responseText);
+                                return false;
+                            }
+                        });
         })
 
     });

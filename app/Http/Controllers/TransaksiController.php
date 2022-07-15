@@ -845,4 +845,22 @@ class TransaksiController extends Controller
             ]
        );
     }
+    /*
+    Get jemput detail untuk tampilan kurir pas pengantaran
+    */
+    public function GetJemput(Request $request)
+    {
+        request()->validate([
+            'id' => 'required',
+        ]);
+        $transaksi=Tbljemput::find(request('id'));
+        
+        return response()->json(
+            [
+              'success' => true,
+              'data' => $transaksi,
+              'message' => "Load Transaksi berhasil",
+            ]
+       );
+    }
 }
