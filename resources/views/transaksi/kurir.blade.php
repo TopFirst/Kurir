@@ -245,21 +245,21 @@
                                                                     <option value="{{ $trx->id }}">{{ $trx->id }}</option>
                                                                     @endforeach
                                                                 </select>
-                                                            </div>
-                                                                <div class="row">
-                                                                    <div class="col-2"> Seller</div> 
-                                                                    <strong id="seller_penjemputan">: -</strong>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-2">Deskripsi</div>  
-                                                                    <strong id="deskripsi_penjemputan">: -</strong>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-2">Talangan</div> 
-                                                                    <strong id="talangan_penjemputan">: -</strong>
-                                                                </div>
+                                                            </div>                                                                
                                                         </div>
                                                     </div>
+                                                    <div class="form-group row m-0 p-0">
+                                                                        <label for="seller_penjemputan" class="col-md-2 col-sm-4 py-0 my-0">Seller</label> 
+                                                                        <div class="col-md-10 col-sm-8"><cite id="seller_penjemputan">-</cite></div>
+                                                                </div>
+                                                                <div class="form-group row m-0 p-0">
+                                                                        <label for="deskripsi_penjemputan" class="col-md-2 col-sm-4 py-0 my-0">Deskripsi</label>  
+                                                                        <div class="col-md-10 col-sm-8"><cite id="deskripsi_penjemputan">-</cite></div>
+                                                                </div>
+                                                                <div class="form-group row m-0 p-0">
+                                                                        <label for="talangan_penjemputan" class="col-md-2 col-sm-4 py-0 my-0">Talangan</label> 
+                                                                        <div class="col-md-10 col-sm-8"><cite id="talangan_penjemputan">-</cite></div>
+                                                                </div>
                                                 </div>
                                                 <div class="modal-footer justify-content-between">
                                                     <button type="button" class="btn btn-default"
@@ -644,9 +644,9 @@
                                  var dat= data.data;
                                 if(data.success){ 
                                     var talangan=dat.talangan + "(" + dat.ongkir + ")";
-                                    $('#seller_penjemputan').text(": " + dat.hp_seller);
-                                    $('#deskripsi_penjemputan').text(": " + dat.deskripsi);
-                                    $('#talangan_penjemputan').text(": " + talangan);
+                                    $('#seller_penjemputan').text(dat.hp_seller);
+                                    $('#deskripsi_penjemputan').text(dat.deskripsi);
+                                    $('#talangan_penjemputan').text(talangan);
                                 }
                                 
                             },
