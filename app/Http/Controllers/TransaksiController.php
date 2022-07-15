@@ -560,7 +560,7 @@ class TransaksiController extends Controller
                 // $display=collect([$strDurasiCutOff,$newformat, $kemarin, $cuttofHariIni]);
                 // $display->dd();
 
-        $kurirs=User::whereHas("roles", function($q){ $q->where("name", "Kurir"); })->get();
+        $kurirs=User::whereHas("roles", function($q){ $q->where("name", "Kurir"); })->orderBy('name','asc')->get();
         $statuses=Status::get();
         // $transaksis_antar = Tblantar::where('status_id',1)
         $transaksis_antar = Tblantar::with('kurir','status', 'jemput')->where(function($query) use($kemarin,$cuttofHariIni){
