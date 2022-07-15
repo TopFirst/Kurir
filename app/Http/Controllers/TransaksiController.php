@@ -551,16 +551,23 @@ class TransaksiController extends Controller
      */
     private function kurir(int $user_id, string $tanggalan, string $penjual, int $id_status)
     {
+        $durasiCutoff = AppConfig::where('slug','cut-off-time')->first();
+        $strDurasiCutOff="+".($durasiCutoff->parameter_value + 24)." hours";
         $newformat =Carbon::parse($tanggalan)->format('m/d/Y');
-        $kemarin=date('Y-m-d',strtotime($tanggalan."-1 days"));
-                // $display=collect([$newformat, $kemarin]);
+        $kemarin=date('Y-m-d 00:00:00',strtotime($tanggalan."-1 days"));
+        $cuttofHariIni=date('Y-m-d H:i:s',strtotime($kemarin.$strDurasiCutOff));
+
+                // $display=collect([$strDurasiCutOff,$newformat, $kemarin, $cuttofHariIni]);
                 // $display->dd();
 
         $kurirs=User::whereHas("roles", function($q){ $q->where("name", "Kurir"); })->get();
         $statuses=Status::get();
         // $transaksis_antar = Tblantar::where('status_id',1)
-        $transaksis_antar = Tblantar::with('kurir','status', 'jemput')->where(function($query) use($kemarin){
-            $query->whereDate('created_at','>=',$kemarin)
+        $transaksis_antar = Tblantar::with('kurir','status', 'jemput')->where(function($query) use($kemarin,$cuttofHariIni){
+            $query->where(function($q) use($kemarin,$cuttofHariIni){
+                $q->where('created_at','>',$kemarin)
+                ->where('created_at','<',$cuttofHariIni);
+            })
             ->orWhere('status_id',1);
         })
         ->where('user_id',$user_id)

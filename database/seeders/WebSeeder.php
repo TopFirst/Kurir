@@ -111,6 +111,14 @@ class WebSeeder extends Seeder
                 'parameter_unit' => 'Rb',
                 ]);
          }
+        if (!AppConfig::where('slug','cut-off-time')->exists()) {
+            $default_ongkir = AppConfig::create([
+                'slug' => 'cut-off-time',
+                'parameter_name' => 'Cut-off Transaksi',
+                'parameter_value' => '24',
+                'parameter_unit' => 'Jam',
+                ]);
+         }
 
     }
 }

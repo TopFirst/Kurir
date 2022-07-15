@@ -33,15 +33,25 @@
                                 {{-- <input type="hidden" name="id" value="{{ $item->id }}"> --}}
                                 <div class="form-group row m-0 p-0">
                                     <label for="parameter_value" class="col-lg-3 mt-1">{{ $item->parameter_name }}</label>
-                                    <div class="input-group col-lg-6">
-                                        <input type="text" class="form-control"  name="parameter_value" value="{{ $item->parameter_value }}" required>
-                                        <span class="input-group-append">
-                                        <select name="parameter_unit" class="form-control" id="parameter_unit">
-                                            <option value="Rb" {{$item->parameter_unit == "Rb" ? 'selected' : ''}}>Ribu</option>
-                                            <option value="%" {{$item->parameter_unit == "%"  ? 'selected' : ''}}>%</option>
-                                        </select>
-                                        </span>
-                                    </div>
+                                    @if($item->slug=='cut-off-time')
+                                        <div class="input-group col-lg-6">
+                                            <input type="number" min="0" step="1" class="form-control col-9"  name="parameter_value" value="{{ $item->parameter_value }}" required>
+                                            <span class="input-group-append col-3 m-0 p-0">
+                                                <input type="text" class="form-control" name="parameter_unit" value="{{ $item->parameter_unit }}" readonly/>
+                                            </span>
+                                        </div>
+                                    @else
+                                        <div class="input-group col-lg-6">
+                                            <input type="text" class="form-control col-9"  name="parameter_value" value="{{ $item->parameter_value }}" required>
+                                            <span class="input-group-append col-3 m-0 p-0">
+                                            <select name="parameter_unit" class="form-control" id="parameter_unit">
+                                                <option value="Rb" {{$item->parameter_unit == "Rb" ? 'selected' : ''}}>Ribu</option>
+                                                <option value="%" {{$item->parameter_unit == "%"  ? 'selected' : ''}}>%</option>
+                                            </select>
+                                            </span>
+                                        </div>
+                                    @endif
+                                    
                                     <div class="col-lg-3">
                                         <button type="submit" class="btn btn-info float-right">Submit</button>
                                     </div>
