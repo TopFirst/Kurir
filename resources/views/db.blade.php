@@ -301,6 +301,48 @@ var cancel_table;
             $("#totalcancel").text(dat_cancel['recordsTotal']);
         });
 
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $(document).on('click', ".hapus", function () {
+          var $tr = $(this).closest("tr");
+          var $a = $(this).closest("a");
+          var id = $a.data("id");
+          if(confirm('Apakah yakin ingin menghapus ini:' + id + '?'))
+            {
+                $tr.hide(500, function () {
+                        $.ajax({
+                            method:"POST",
+                            url: "{{ route ('transaksi.hapus') }}",
+                            data : {
+                                    id : id
+                                },
+                            // dataType: 'json',
+                            success: function(data) {
+                                if(!data.success){
+                                    alert('data gagal dihapus');
+                                }
+                                else
+                                {
+                                    cancel_table.draw();
+                                }
+                                
+                            },
+                            error: function(jqXHR, textStatus, errorThrown){
+                                // alert('Error: ' + textStatus + ' - ' + errorThrown);
+                                var responseText = jQuery.parseJSON(jqXHR.responseText);
+                                console.error(responseText);
+                                return false;
+                            }
+                        });
+
+                });
+            }
+          
+      });
+
         setInterval(function(){
             var dt = new Date();
             var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
