@@ -215,7 +215,7 @@
                                             <img src="{{ asset($kurir->foto)  }}" alt="Kurir" class="img-size-50">
                                         </div>
                                         <div class="product-info">
-                                            <a href="javascript:void(0)" class="product-title">{{ $kurir->name }} ({{ $kurir->id }})
+                                            <a href="javascript:void(0)" class="product-title">{{ $kurir->name??'-' }} ({{ $kurir->id }})
                                                 <span class="badge badge-warning float-right">{{ $kurir->jemputan->count() }}</span></a>
                                             <span class="product-description">
                                                 ({{ $kurir->hp }}) {{ $kurir->alamat }}

@@ -151,7 +151,7 @@ class HomeController extends Controller
                            return $btn;
                     })
                     ->addColumn('kurirjemput', function($row){
-                            return $row->kurir->name;
+                            return $row->kurir->name??'-';
                     })
                     ->addColumn('status', function($row){
                         return '<span class="badge badge-warning">Belum Input</span>';
@@ -181,7 +181,7 @@ class HomeController extends Controller
                            return $btn;
                     })
                     ->addColumn('kurirjemput', function($row){
-                            return $row->kurir->name;
+                            return $row->kurir->name??'-';
                     })
                     ->addColumn('status', function($row){
                         $stt='<span class="badge badge-warning">Belum Input</span>';
