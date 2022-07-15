@@ -173,7 +173,7 @@
                                                 class="form-control form-control-sm m-0">
                                                 <option value=""> Pilih Kurir </option>
                                                 @foreach ($kurirs as $key=>$kurir)
-                                                <option value="{{ $kurir->id }}"> {{ $kurir->name }} </option>
+                                                <option value="{{ $kurir->id }}"> {{ $kurir->name??'-' }} </option>
                                                 @endforeach
                                             </select>
                                         </div>

@@ -314,7 +314,7 @@ class TransaksiController extends Controller
         {
             $statuses = Status::all();
             $sellers=Seller::all();
-            $kurirs=User::whereHas("roles", function($q){ $q->where("name", "Kurir"); })->get();
+            $kurirs=User::whereHas("roles", function($q){ $q->where("name", "Kurir"); })->orderBy('name','asc')->get();
             return view('transaksi.index',compact('statuses','kurirs','sellers'))
                 ->with('i', (request()->input('page', 1) - 1) * 5)
                 ->with('title', 'Transaksi');
@@ -421,7 +421,7 @@ class TransaksiController extends Controller
             return $btn;
             })
             ->addColumn('kurirjemput', function($row){
-            return $row->kurir->name;
+            return $row->kurir->name??'-';
             })
             ->addColumn('kurirantar', function($row){
             return $row->antar->kurir->name??'-';
