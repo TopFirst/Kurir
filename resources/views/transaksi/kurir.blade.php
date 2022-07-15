@@ -20,7 +20,7 @@
                                     <option value="" disabled>--Pilih Kurir--</option>
                                     @foreach($kurirs as $key=>$kurir)
                                     <option value="{{ $kurir->id }}" {{ $kurir->id==$id_pengguna?'selected':'' }}>
-                                        {{ $kurir->name }}</option>
+                                        {{ $kurir->name??'-' }}</option>
                                     @endforeach
                                 </select>
                         </div>
@@ -133,7 +133,7 @@
                                                     </div>
                                                     <div class="col-4">
                                                         <dt>Kurir Jemput</dt>
-                                                        <dd>{{ $trx->kurir->name }}</dd>
+                                                        <dd>{{ $trx->kurir->name??'-' }}</dd>
                                                         <dt>Kurir Antar</dt>
                                                         <dd>{{ $trx->antar->kurir->name??'-' }}</dd>
                                                         <dt>Status</dt>
@@ -314,7 +314,7 @@
                                                                     <dt>Hp Seller</dt>
                                                                     <dd>{{ $trx->jemput->seller->nama??$trx->jemput->hp_seller }}</dd>
                                                                     <dt>Kurir Antar</dt>
-                                                                    <dd>{{ $trx->kurir->name }}</dd>
+                                                                    <dd>{{ $trx->kurir->name??'-' }}</dd>
                                                                     <dt>Catatan</dt>
                                                                     <dd>{{ $trx->antar->catatan??'-' }}</dd>
                                                                 </dl>
@@ -333,7 +333,7 @@
                                                                 <dt>Tanggal Proses</dt>
                                                                 <dd>{{ $trx->updated_at }}</dd>
                                                                 <dt>Kurir Jemput</dt>
-                                                                <dd>{{ $trx->jemput->kurir->name }}</dd>
+                                                                <dd>{{ $trx->jemput->kurir->name??'-' }}</dd>
                                                                 <dt>Status</dt>
                                                                 <dd>{{ $trx->status->name }}</dd>
                                                             </div>
@@ -498,7 +498,7 @@
                                                                 <dt>Tanggal Proses</dt>
                                                                 <dd>{{ $trx->antar->updated_at }}</dd>
                                                                 <dt>Kurir Jemput</dt>
-                                                                <dd>{{ $trx->kurir->name }}</dd>
+                                                                <dd>{{ $trx->kurir->name??'-' }}</dd>
                                                                 <dt>Status</dt>
                                                                 <dd>{{ $trx->antar->status->name??'Dijemput' }}</dd>
                                                             </div>
