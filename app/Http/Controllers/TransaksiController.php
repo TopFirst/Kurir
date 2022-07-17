@@ -51,7 +51,7 @@ class TransaksiController extends Controller
      */
     public function index(Request $request)
     {
-        $skrg=$request->tanggalan?$request->tanggalan:date('Y-m-d');
+        $skrg=$request->tanggalan?$request->tanggalan:date('Y-m-d H:i:s');
         $penjual=$request->hp_seller??'';
         $status_id=$request->status_id??0;
         $kurir_id=Auth::user()->id;
@@ -553,21 +553,18 @@ class TransaksiController extends Controller
     {
         $durasiCutoff = AppConfig::where('slug','cut-off-time')->first();
         $strDurasiCutOff="+".($durasiCutoff->parameter_value + 24)." hours";
-        $newformat =Carbon::parse($tanggalan)->format('m/d/Y');
-        $kemarin=date('Y-m-d 00:00:00',strtotime($tanggalan."-1 days"));
+        $dt_tanggalan =Carbon::parse($tanggalan)->format('Y-m-d H:i:s');
+        $kemarin=date('Y-m-d',strtotime($tanggalan."-1 days"));
         $cuttofHariIni=date('Y-m-d H:i:s',strtotime($kemarin.$strDurasiCutOff));
 
-                // $display=collect([$strDurasiCutOff,$newformat, $kemarin, $cuttofHariIni]);
+                // $display=collect([$strDurasiCutOff, $kemarin, $cuttofHariIni, $dt_tanggalan]);
                 // $display->dd();
 
         $kurirs=User::whereHas("roles", function($q){ $q->where("name", "Kurir"); })->orderBy('name','asc')->get();
         $statuses=Status::get();
         // $transaksis_antar = Tblantar::where('status_id',1)
-        $transaksis_antar = Tblantar::with('kurir','status', 'jemput')->where(function($query) use($kemarin,$cuttofHariIni){
-            $query->where(function($q) use($kemarin,$cuttofHariIni){
-                $q->where('created_at','>',$kemarin)
-                ->where('created_at','<',$cuttofHariIni);
-            })
+        $transaksis_antar = Tblantar::with('kurir','status', 'jemput')->where(function($query) use($kemarin){
+            $query->whereDate('created_at','>',$kemarin)
             ->orWhere('status_id',1);
         })
         ->where('user_id',$user_id)
@@ -575,7 +572,11 @@ class TransaksiController extends Controller
         ->when($id_status>0, function($q) use($id_status){
             return $q->where('status_id',$id_status);
         })
-        ->orderBy('updated_at','desc')->get();
+        ->orderBy('updated_at','desc');//->get();
+        if($durasiCutoff->parameter_value>0 && $dt_tanggalan>$cuttofHariIni)
+            $transaksis_antar=$transaksis_antar->where('status_id',1);
+
+        $transaksis_antar=$transaksis_antar->get();
 
         $transaksis_belum_antar=Tbljemput::doesntHave('antar')->get();
         $transaksiProcess=Tbljemput::with('antar')->whereHas('antar', function($g){
@@ -616,7 +617,7 @@ class TransaksiController extends Controller
         return view('transaksi.kurir',compact('transaksis_antar','transaksis_jemput','kurirs','transaksis_belum_antar','transaksis_jemput_cancel','statuses','sellers'))
         ->with('id_pengguna',$user_id)
         ->with('id_status',$id_status)
-        ->with('tanggal',$newformat)
+        ->with('tanggal',$tanggalan)
         ->with('hp',$penjual);
     }
 

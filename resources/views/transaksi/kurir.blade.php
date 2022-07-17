@@ -13,7 +13,7 @@
             <form id="gantiuser" action="{{ route('transaksi.index') }}" method="GET" class="responsive">
                 @csrf
                 <div class="row justify-content-between mb-0">
-                    <div class="col-xs-12 col-sm-12 col-md-2 m-0">
+                    <div class="col-xs-12 col-sm-12 col-md-3 m-0">
                         <div class="form-group m-0">
                             <label for="cmbkurir" class="col-form-label">Kurir</label>
                                 <select name="user_id" id="cmbkurir" class="form-control form-control-sm select2" {{ Auth::user()->hasRole('Admin')?'':'disabled' }}>
@@ -25,17 +25,10 @@
                                 </select>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-12 col-md-2 m-0">
+                    <div class="col-xs-12 col-sm-12 col-md-3 m-0">
                         <div class="form-group m-0">
                             <label for="reservationdate" class="col-form-label">Periode</label>
-                                <div class="input-group input-group-sm date" id="reservationdate" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" name="tanggalan"
-                                        data-target="#reservationdate" value="{{ $tanggal }}" />
-                                    <div class="input-group-append" data-target="#reservationdate"
-                                        data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                    </div>
-                                </div>
+                            <input type="datetime-local" name="tanggalan" class="form-control form-control-sm" value="{{$tanggal}}"/>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-2 m-0">
@@ -50,11 +43,11 @@
                                 </select>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-12 col-md-6 m-0">
+                    <div class="col-xs-12 col-sm-12 col-md-4 m-0">
                         <div class="form-group m-0">
-                            <label for="reservationdate" class="col-form-label">Seller</label>
+                            <label for="hp_seller" class="col-form-label">Seller</label>
                             <div class="form-group row">
-                                <input type="text" name="hp_seller" placeholder="nomor seller.." value="{{ $hp }}" class="form-control form-control-sm col-9 ml-2" autocomplete="off" role="combobox" list="seller_list" aria-autocomplete="list">
+                                <input type="text" name="hp_seller" id="hp_seller" placeholder="nomor seller.." value="{{ $hp }}" class="form-control form-control-sm col-9 ml-2" autocomplete="off" role="combobox" list="seller_list" aria-autocomplete="list">
                                 <button type="submit" id="btnsubmit" class="btn btn-sm btn-info col-2 ml-2">Cari</button>
                             </div>
                         </div>
@@ -623,13 +616,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('.select2').select2();
-        $('#reservationdate').datetimepicker({
-            format: 'L'
-        });
-        $('#reservationdate').on('dp.change', function(e){ 
-            var formatedValue = e.date.format(e.date._f);
-            console.log(formatedValue);
-        });
 
         $('#tbljemput_id').on('change', function(){ 
             $.ajax({
