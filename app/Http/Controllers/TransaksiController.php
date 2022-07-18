@@ -552,7 +552,7 @@ class TransaksiController extends Controller
     private function kurir(int $user_id, string $tanggalan, string $penjual, int $id_status)
     {
         $durasiCutoff = AppConfig::where('slug','cut-off-time')->first();
-        $strDurasiCutOff="+".($durasiCutoff->parameter_value + 24)." hours";
+        $strDurasiCutOff="+".$durasiCutoff->parameter_value." hours";
         $dt_tanggalan =Carbon::parse($tanggalan)->format('Y-m-d H:i:s');
         $kemarin=date('Y-m-d',strtotime($tanggalan."-1 days"));
         $cuttofHariIni=date('Y-m-d H:i:s',strtotime($kemarin.$strDurasiCutOff));
@@ -564,7 +564,7 @@ class TransaksiController extends Controller
         $statuses=Status::get();
         // $transaksis_antar = Tblantar::where('status_id',1)
         $transaksis_antar = Tblantar::with('kurir','status', 'jemput')->where(function($query) use($kemarin){
-            $query->whereDate('created_at','>',$kemarin)
+            $query->whereDate('created_at','>=',$kemarin)
             ->orWhere('status_id',1);
         })
         ->where('user_id',$user_id)
