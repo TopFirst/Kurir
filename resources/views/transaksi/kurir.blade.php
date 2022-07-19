@@ -47,8 +47,9 @@
                         <div class="form-group m-0">
                             <label for="hp_seller" class="col-form-label">Seller</label>
                             <div class="form-group row">
-                                <input type="text" name="hp_seller" id="hp_seller" placeholder="nomor seller.." value="{{ $hp }}" class="form-control form-control-sm col-9 ml-2" autocomplete="off" role="combobox" list="seller_list" aria-autocomplete="list">
+                                <input type="text" name="hp_seller" id="hp_seller" placeholder="nomor seller.." value="{{ $hp }}" class="form-control form-control-sm col-8 ml-2" autocomplete="off" role="combobox" list="seller_list" aria-autocomplete="list">
                                 <button type="submit" id="btnsubmit" class="btn btn-sm btn-info col-2 ml-2">Cari</button>
+                                <a href="{{ route('transaksi.index') }}" class="btn btn-sm btn-outline-info col-1" data-toggle="tooltip" title="Reset Filter">R</a>
                             </div>
                         </div>
                     </div>
