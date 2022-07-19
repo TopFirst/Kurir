@@ -563,11 +563,11 @@ class TransaksiController extends Controller
         $kurirs=User::whereHas("roles", function($q){ $q->where("name", "Kurir"); })->orderBy('name','asc')->get();
         $statuses=Status::get();
         // $transaksis_antar = Tblantar::where('status_id',1)
-        $transaksis_antar = Tblantar::with('kurir','status', 'jemput')->where(function($query) use($kemarin, $cuttofHariIni){
-            //$query->whereDate('created_at','>=',$kemarin)
-            $query->where(function($q) use($kemarin,$cuttofHariIni){
-                $q->whereDate('created_at','>=',$kemarin)->whereDate('created_at','<',$cuttofHariIni);
-            })
+        $transaksis_antar = Tblantar::with('kurir','status', 'jemput')->where(function($query) use($tanggalan){
+            $query->whereDate('created_at','=',Carbon::parse($tanggalan)->toDateString())
+            // $query->where(function($q) use($kemarin,$cuttofHariIni){
+            //     $q->whereDate('created_at','>=',$kemarin)->whereDate('created_at','<',$cuttofHariIni);
+            // })
             ->orWhere('status_id',1);
         })
         ->where('user_id',$user_id)

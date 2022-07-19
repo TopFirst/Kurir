@@ -324,7 +324,9 @@
                                                                 </dl>
                                                             </div>
                                                             <div class="col-4">
-                                                                <dt>Tanggal Proses</dt>
+                                                                <dt>Input Pengantaran</dt>
+                                                                <dd>{{ $trx->created_at }}</dd>
+                                                                <dt>Proses Terakhir</dt>
                                                                 <dd>{{ $trx->updated_at }}</dd>
                                                                 <dt>Kurir Jemput</dt>
                                                                 <dd>{{ $trx->jemput->kurir->name??'-' }}</dd>
