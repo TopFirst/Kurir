@@ -553,21 +553,22 @@ class TransaksiController extends Controller
     {
         $durasiCutoff = AppConfig::where('slug','cut-off-time')->first();
         $strDurasiCutOff="+".$durasiCutoff->parameter_value." hours";
-        $dt_tanggalan =Carbon::parse($tanggalan)->format('Y-m-d H:i:s');
-        $kemarin=date('Y-m-d',strtotime($tanggalan."-1 days"));
-        $cuttofHariIni=date('Y-m-d H:i:s',strtotime($kemarin.$strDurasiCutOff));
 
-                // $display=collect([$strDurasiCutOff, $kemarin, $cuttofHariIni, $dt_tanggalan]);
+        $dt_tanggalan=Carbon::parse($tanggalan)->format('Y-m-d H:i:s');
+        $mulai=Carbon::parse($tanggalan)->hour($durasiCutoff->parameter_value)->minute(0)->second(0)->toDateTimeString();
+        if($dt_tanggalan<$mulai)
+            $mulai=date('Y-m-d H:i:s',strtotime($mulai."-1 days"));
+        $akhir=date('Y-m-d H:i:s',strtotime($mulai."+1 days"));
+
+                // $display=collect([$mulai, $akhir, $dt_tanggalan]);
                 // $display->dd();
 
         $kurirs=User::whereHas("roles", function($q){ $q->where("name", "Kurir"); })->orderBy('name','asc')->get();
         $statuses=Status::get();
-        // $transaksis_antar = Tblantar::where('status_id',1)
-        $transaksis_antar = Tblantar::with('kurir','status', 'jemput')->where(function($query) use($tanggalan){
-            $query->whereDate('created_at','=',Carbon::parse($tanggalan)->toDateString())
-            // $query->where(function($q) use($kemarin,$cuttofHariIni){
-            //     $q->whereDate('created_at','>=',$kemarin)->whereDate('created_at','<',$cuttofHariIni);
-            // })
+        $transaksis_antar = Tblantar::with('kurir','status', 'jemput')->where(function($query) use($mulai,$akhir){
+            $query->where(function($q) use($mulai,$akhir){
+                $q->where('created_at','>',$mulai)->where('created_at','<',$akhir);
+            })
             ->orWhere('status_id',1);
         })
         ->where('user_id',$user_id)
@@ -575,11 +576,7 @@ class TransaksiController extends Controller
         ->when($id_status>0, function($q) use($id_status){
             return $q->where('status_id',$id_status);
         })
-        ->orderBy('updated_at','desc');//->get();
-        if($durasiCutoff->parameter_value>0 && $dt_tanggalan>$cuttofHariIni)
-            $transaksis_antar=$transaksis_antar->where('status_id',1);
-
-        $transaksis_antar=$transaksis_antar->get();
+        ->orderBy('updated_at','desc')->get();
 
         $transaksis_belum_antar=Tbljemput::doesntHave('antar')->get();
         $transaksiProcess=Tbljemput::with('antar')->whereHas('antar', function($g){
