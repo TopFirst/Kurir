@@ -25,7 +25,7 @@
                                 </select>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-12 col-md-3 m-0">
+                    <div class="col-xs-12 col-sm-12 col-md-2 m-0">
                         <div class="form-group m-0">
                             <label for="reservationdate" class="col-form-label">Periode</label>
                             <input type="datetime-local" name="tanggalan" class="form-control form-control-sm" value="{{$tanggal}}"/>
@@ -43,7 +43,13 @@
                                 </select>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-12 col-md-4 m-0">
+                    <div class="col-xs-12 col-sm-12 col-md-2 m-0">
+                        <div class="form-group m-0">
+                            <label for="jam_selesai" class="col-form-label">Jam Selesai</label>
+                            <input type="time" name="jam_selesai" id="jam_selesai" class="form-control form-control-sm" value="{{$jam_selesai}}"/>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-3 m-0">
                         <div class="form-group m-0">
                             <label for="hp_seller" class="col-form-label">Seller</label>
                             <div class="form-group row">

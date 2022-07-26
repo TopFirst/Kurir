@@ -54,6 +54,7 @@ class TransaksiController extends Controller
         $skrg=$request->tanggalan?$request->tanggalan:date('Y-m-d H:i:s');
         $penjual=$request->hp_seller??'';
         $status_id=$request->status_id??0;
+        $jam_selesai=$request->jam_selesai??'';
         $kurir_id=Auth::user()->id;
 
         if(Auth::user()->hasRole('Admin'))
@@ -65,7 +66,7 @@ class TransaksiController extends Controller
         // $display=collect([$kurir_id,$skrg,$penjual]);
         // $display->dd();
 
-        return $this->kurir($kurir_id,$skrg,$penjual,$status_id);
+        return $this->kurir($kurir_id,$skrg,$penjual,$status_id,$jam_selesai);
     }
     /**
      * App config display.
@@ -549,7 +550,7 @@ class TransaksiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    private function kurir(int $user_id, string $tanggalan, string $penjual, int $id_status)
+    private function kurir(int $user_id, string $tanggalan, string $penjual, int $id_status, string $jam_selesai)
     {
         $durasiCutoff = AppConfig::where('slug','cut-off-time')->first();
         $strDurasiCutOff="+".$durasiCutoff->parameter_value." hours";
@@ -560,14 +561,24 @@ class TransaksiController extends Controller
             $mulai=date('Y-m-d H:i:s',strtotime($mulai."-1 days"));
         $akhir=date('Y-m-d H:i:s',strtotime($mulai."+1 days"));
 
-                // $display=collect([$mulai, $akhir, $dt_tanggalan]);
+        //parsing jam
+        $jam=0;
+        if($jam_selesai<>'')
+        {
+            $jam=(int)explode(':',$jam_selesai,2)[0];
+            $jam += str_contains(explode(':',$jam_selesai,2)[1],'AM')?12:0;
+        }
+                // $display=collect([$mulai, $akhir, $dt_tanggalan,$jam]);
                 // $display->dd();
 
         $kurirs=User::whereHas("roles", function($q){ $q->where("name", "Kurir"); })->orderBy('name','asc')->get();
         $statuses=Status::get();
-        $transaksis_antar = Tblantar::with('kurir','status', 'jemput')->where(function($query) use($mulai,$akhir){
-            $query->where(function($q) use($mulai,$akhir){
-                $q->where('created_at','>',$mulai)->where('created_at','<',$akhir);
+        $transaksis_antar = Tblantar::with('kurir','status', 'jemput')->where(function($query) use($mulai,$akhir,$jam){
+            $query->where(function($q) use($mulai,$akhir,$jam){
+                $q->where('created_at','>',$mulai)->where('created_at','<',$akhir)
+                ->when($jam>0, function($q) use($jam){
+                    $q->whereRaw('HOUR(updated_at)=' . $jam);
+                });
             })
             ->orWhere('status_id',1);
         })
@@ -618,6 +629,7 @@ class TransaksiController extends Controller
         ->with('id_pengguna',$user_id)
         ->with('id_status',$id_status)
         ->with('tanggal',$tanggalan)
+        ->with('jam_selesai',$jam_selesai)
         ->with('hp',$penjual);
     }
 
