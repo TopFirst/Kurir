@@ -57,24 +57,14 @@
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-group">
                                         <label>Tanggal Jemput:</label>
-                                          <div class="input-group">
-                                              <input type="text" class="form-control datepicker" name="tgl_jemput" value="{{ $transaksi->created_at }}"/>
-                                              <div class="input-group-append">
-                                                  <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                              </div>
-                                          </div>
+                                        <input type="datetime-local" step="1" min="2020-01-01T11:00" class="form-control" name="tgl_jemput" value="{{ $transaksi->created_at }}"/>
                                       </div>
                                 </div>
                                 <!-- Tanggal Jemput -->
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-group">
                                         <label>Tanggal Antar:</label>
-                                          <div class="input-group">
-                                              <input type="text" class="form-control datepicker" name="tgl_antar" value="{{ $transaksi->antar->created_at??'' }}"/>
-                                              <div class="input-group-append">
-                                                  <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                              </div>
-                                          </div>
+                                        <input type="datetime-local" step="1" min="2020-01-01T11:00" class="form-control" name="tgl_antar" value="{{ $transaksi->antar->created_at??'' }}"/>
                                       </div>
                                 </div>
 
@@ -165,8 +155,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $('.datepicker').datepicker({
-            format: 'yyyy-mm-dd',
+        $('.datepicker').datetimepicker({
+            format: 'yyyy-mm-dd H:i:s',
             autoclose: true,
             // startDate: '0d'
         });
