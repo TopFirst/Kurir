@@ -28,7 +28,7 @@
                     <div class="col-xs-12 col-sm-12 col-md-2 m-0">
                         <div class="form-group m-0">
                             <label for="reservationdate" class="col-form-label">Periode</label>
-                            <input type="datetime-local" name="tanggalan" class="form-control form-control-sm" value="{{$tanggal}}"/>
+                            <input type="datetime-local" name="tanggalan" class="form-control form-control-sm" value="{!! date('Y-m-d H:i:s', strtotime($tanggal)) !!}"/>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-2 m-0">
