@@ -397,9 +397,16 @@ class TransaksiController extends Controller
         })
         ->when(request('filter_status'), function($q){
             $stt=request('filter_status');
-            $q->whereHas('antar',function($q) use($stt){
-                return $q->where('status_id',$stt);
-            });
+            if($stt=="belum_input")
+            {
+                $q->whereDoesntHave('antar');
+            }
+            else
+            {
+                $q->whereHas('antar',function($q) use($stt){
+                    return $q->where('status_id',$stt);
+                });
+            }
         })->get();
 
         $totaltalangan=$dat->sum('talangan');
@@ -449,7 +456,7 @@ class TransaksiController extends Controller
             return $row->antar->kurir->name??'-';
             })
             ->addColumn('status', function($row){
-            return $row->antar->status->name??'-';
+            return $row->antar->status->name??'Belum Input';
             })
             ->addColumn('tglproses', function($row){
             return $row->antar->created_at??'-';

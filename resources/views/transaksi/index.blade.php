@@ -196,6 +196,7 @@
                                     <label for="filter_status" class="col-form-label col-form-label-sm">Status</label>
                                     <select name="filter_status" id="filter_status" class="form-control form-control-sm">
                                             <option value=""> Pilih Status </option>
+                                            <option value="belum_input"> Belum Input</option>
                                             @foreach ($statuses as $key=>$stt)
                                             <option value="{{ $stt->id }}"> {{ $stt->name }} </option>
                                             @endforeach
