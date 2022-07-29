@@ -16,6 +16,7 @@ class Tblantar extends Model
         'talangan',
         'status_id',
         'catatan',
+        'lunas',
         'created_at',
         'created_at',
 

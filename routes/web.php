@@ -49,6 +49,7 @@ Route::get('/transaksi/cekseller',[TransaksiController::class,'cekseller'])->mid
 Route::post('/transaksi/cetakpdf',[TransaksiController::class,'cetakpdf'])->middleware('auth')->name('transaksi.cetakpdf');
 Route::get('/transaksi/br',[TransaksiController::class,'br'])->middleware('auth')->name('transaksi.br');
 Route::get('/transaksi/appconfig',[TransaksiController::class,'appconfig'])->middleware('auth')->name('transaksi.appconfig');
+Route::post('/transaksi/lunaskan',[TransaksiController::class,'lunaskan'])->middleware('auth')->name('transaksi.lunaskan');
 Route::post('/transaksi/backup',[TransaksiController::class,'backup'])->middleware('auth')->name('transaksi.backup');
 Route::post('/transaksi/restore',[TransaksiController::class,'restore'])->middleware('auth')->name('transaksi.restore');
 Route::post('/transaksi/ubahconfig/{AppConfig}',[TransaksiController::class,'ubahconfig'])->middleware('auth')->name('transaksi.ubahconfig');

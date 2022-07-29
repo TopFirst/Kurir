@@ -45,8 +45,12 @@
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-2 m-0">
                         <div class="form-group m-0">
-                            <label for="jam_selesai" class="col-form-label">Jam Selesai</label>
-                            <input type="time" name="jam_selesai" id="jam_selesai" class="form-control form-control-sm" value="{{$jam_selesai}}"/>
+                            <label for="cmblunas" class="col-form-label">Lunas</label>
+                            <select name="cmblunas" id="cmblunas" class="form-control form-control-sm select2">
+                                    <option value="0" {{ $lunas==0?'selected':'' }}>--Semua--</option>
+                                    <option value="1" {{ $lunas==1?'selected':'' }}>Sudah</option>
+                                    <option value="2" {{ $lunas==2?'selected':'' }}>Belum</option>
+                                </select>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-3 m-0">
@@ -367,6 +371,40 @@
                                         <!-- /.modal-dialog -->
                                         <div class="form-group float-right mb-0">
                                         @can('transaksi-edit')
+                                        @if($trx->lunas===null | $trx->lunas===0)
+                                        <a href="#" class="text-warning" data-toggle="modal"
+                                            data-target="#lunaskan_{{ str_replace("/","",$trx->id) }}"><i
+                                                class="fa fa-check"></i></a>
+                                        <!-- Konfirmasi Hapus -->
+                                        <div class="modal fade" id="lunaskan_{{ str_replace("/","",$trx->id) }}">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-body">
+                                                        <form action="{{ route('transaksi.lunaskan') }}" method="POST">
+                                                            @csrf
+                                                            @method('POST')
+                                                            <input type="hidden" name="id" value="{{$trx->id}}"/>
+                                                            <p>Lunaskan transaksi ini <b>{{ $trx->id }}</b>?
+                                                            </p>
+                                                            <div class="justify-content-between">
+                                                                <button type="button" class="btn btn-md btn-default"
+                                                                    data-dismiss="modal">Cancel</button>
+                                                                <div class="float-right">
+                                                                    <button type="submit"
+                                                                        class="btn btn-md btn-outline-info"><i
+                                                                            class="fa fa-check"></i> OK</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <!-- /.modal-content -->
+                                            </div>
+                                            <!-- /.modal-dialog -->
+                                        </div>
+                                        <!-- /.modal -->        
+                                        @endif
+
                                         <a href="{{ route('transaksi.edit',$trx->id) }}" class="text-info"><i class="fa fa-edit"></i></a>
                                         @endcan
                                         @can('transaksi-delete')

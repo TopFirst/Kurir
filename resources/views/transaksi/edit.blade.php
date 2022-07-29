@@ -45,7 +45,7 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h2 class="card-title">Edit Transaksi</h2>
+                        <h2 class="card-title">Edit Transaksi : <strong>{{$transaksi->id}}</strong></h2>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -127,6 +127,12 @@
                                         $stts->sort(),
                                         $transaksi->antar->status_id??'', array('class' =>
                                         'form-control')) !!}
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <strong>Lunas:</strong>
+                                        {!! Form::checkbox('lunas', 1, $transaksi->antar->lunas>0, array('class' =>'form-control form-control-sm')) !!}
                                     </div>
                                 </div>
                                 
