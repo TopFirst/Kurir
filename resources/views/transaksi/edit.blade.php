@@ -1,7 +1,7 @@
 @extends('layouts/admin')
 
 @push('css')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
+<link href="{{ asset('plugins/datetimepicker/jquery.datetimepicker.css') }}" rel="stylesheet" />
 @endpush
 @section('container')
 
@@ -56,15 +56,30 @@
                                 <!-- Tanggal Jemput -->
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-group">
-                                        <label>Tanggal Jemput:</label>
-                                        <input type="datetime-local" step="1" min="2020-01-01T11:00" class="form-control" name="tgl_jemput" value="{!! date('Y-m-d H:i:s', strtotime($transaksi->created_at)) !!}"/>
+                                        <label for="tgl_jemput">Tanggal Jemput:</label>
+                                        <div class='input-group' id='tgl_jemput'>
+                                            <input type='text' class="form-control datetimepicker" name="tgl_jemput" value="{!! date('Y-m-d H:i', strtotime($transaksi->created_at)) !!}" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="far fa-calendar-alt"></i>
+                                                </span>
+                                            </div>
+                                        </div>
                                       </div>
+                                      
                                 </div>
                                 <!-- Tanggal Jemput -->
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-group">
-                                        <label>Tanggal Antar:</label>
-                                        <input type="datetime-local" step="1" min="2020-01-01T11:00" class="form-control" name="tgl_antar" value="{!! date('Y-m-d H:i:s', strtotime($transaksi->antar->created_at??'')) !!}"/>
+                                        <label for="tgl_antar">Tanggal Antar:</label>
+                                        <div class='input-group' id='tgl_antar'>
+                                            <input type='text' class="form-control datetimepicker" name="tgl_antar" value="{!! $transaksi->antar?date('Y-m-d H:i', strtotime($transaksi->antar->created_at)):'' !!}" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="far fa-calendar-alt"></i>
+                                                </span>
+                                            </div>
+                                        </div>
                                       </div>
                                 </div>
 
@@ -155,18 +170,20 @@
 
 @endsection
 @push('scripts')
-<!-- InputMask -->
-<script src="{{ asset('plugins/moment/moment.min.js') }}"></script>
-<script src="{{ asset('plugins/inputmask/min/jquery.inputmask.bundle.min.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
+<script src="{{ asset('plugins/datetimepicker/jquery.datetimepicker.full.js') }}"></script>
+
 <script type="text/javascript">
     $(document).ready(function () {
-        // $('.datepicker').datetimepicker({
-        //     format: 'yyyy-mm-dd H:i:s',
-        //     autoclose: true,
-        //     // startDate: '0d'
-        // });
+        $('.datetimepicker').datetimepicker({
+            format: 'Y-m-d H:i',
+            autoclose: true,
+            // startDate: '0d'
+        });
 });
+
+// $(function () {
+//     $('.datetimepicker').datetimepicker();
+// });
 </script>
 
 @endpush

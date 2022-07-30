@@ -7,39 +7,24 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Aplikasi Kurir') }}</title>
 
-    {{-- <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
-    <!-- daterange picker -->
-    <link rel="stylesheet" href="{{ asset('plugins/daterangepicker/daterangepicker.css') }}">
-    <!-- Select2 -->
-    <link href="{{ asset('plugins/select2/css/select2.min.css') }}" rel="stylesheet" />
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
-
       <!-- Font Awesome -->
       <link href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}" rel="stylesheet" />
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+      <!-- datetimepicker -->
+      <link href="{{ asset('plugins/datetimepicker/jquery.datetimepicker.css') }}" rel="stylesheet" />
   <!-- daterange picker -->
   <link href="{{ asset('plugins/daterangepicker/daterangepicker.css') }}" rel="stylesheet" />
   <!-- iCheck for checkboxes and radio inputs -->
   <link href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}" rel="stylesheet" />
-  <!-- Bootstrap Color Picker -->
-  {{-- <link href="{{ asset('plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css') }}" rel="stylesheet" /> --}}
   <!-- Tempusdominus Bbootstrap 4 -->
   <link href="{{ asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet" />
   <!-- Select2 -->
   <link href="{{ asset('plugins/select2/css/select2.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}" rel="stylesheet" />
-  <!-- Bootstrap4 Duallistbox -->
-  {{-- <link href="{{ asset('plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css') }}" rel="stylesheet" /> --}}
   <!-- Theme style -->
   <link href="{{ asset('dist/css/adminlte.min.css') }}" rel="stylesheet" />
-  <!-- Google Font: Source Sans Pro -->
-  {{-- <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet"> --}}
+
       <!-- Fonts -->
       <link rel="dns-prefetch" href="https://fonts.gstatic.com">
       <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
@@ -116,19 +101,31 @@
 
 <!-- jQuery -->
 <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+<!-- datetimepicker -->
+<script src="{{ asset('plugins/datetimepicker/jquery.datetimepicker.full.js') }}"></script>
+
 <!-- Bootstrap 4 -->
 <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- Select2 -->
 <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
 <!-- InputMask -->
-<script src="{{ asset('plugins/moment/moment.min.js') }}"></script>
-<script src="{{ asset('plugins/inputmask/min/jquery.inputmask.bundle.min.js') }}"></script>
+<!-- <script src="{{ asset('plugins/moment/moment.min.js') }}"></script>
+<script src="{{ asset('plugins/inputmask/min/jquery.inputmask.bundle.min.js') }}"></script> -->
 <!-- date-range-picker -->
-<script src="{{ asset('plugins/daterangepicker/daterangepicker.js') }}"></script>
+<!-- <script src="{{ asset('plugins/daterangepicker/daterangepicker.js') }}"></script> -->
 <!-- Tempusdominus Bootstrap 4 -->
-<script src="{{ asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
+<!-- <script src="{{ asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script> -->
 <!-- AdminLTE App -->
 <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.select2').select2();
+        $('.datetimepicker').datetimepicker({
+            format: 'Y-m-d H:i',
+            autoclose: true,
+        });
+    });
+</script>
 @stack('scripts')
 
 </body>

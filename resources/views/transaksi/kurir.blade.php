@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
-
 @section('content')
     @php
         $totaljemput=($transaksis_jemput->sum('talangan')-$transaksis_jemput->sum('ongkir'));
@@ -27,8 +26,17 @@
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-2 m-0">
                         <div class="form-group m-0">
-                            <label for="reservationdate" class="col-form-label">Periode</label>
-                            <input type="datetime-local" name="tanggalan" class="form-control form-control-sm" value="{!! date('Y-m-d H:i:s', strtotime($tanggal)) !!}"/>
+                            <label for="tanggalan" class="col-form-label">Periode</label>
+                            <div class='input-group' id='tanggalan'>
+                                            <input type='text' class="form-control form-control-sm datetimepicker" name="tanggalan" value="{!! date('Y-m-d H:i', strtotime($tanggal)) !!}" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="far fa-calendar-alt"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                            <!-- <input type="text" name="tanggalan" id="tanggalan"  class="form-control form-control-sm datetimepicker" value="{!! date('Y-m-d H:i', strtotime($tanggal)) !!}"/> -->
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-2 m-0">
@@ -331,6 +339,8 @@
                                                                     <dd>{{ $trx->jemput->deskripsi }}</dd>
                                                                     <dt>Talangan</dt>
                                                                     <dd>{{ $trx->jemput->talangan }} ({{ $trx->ongkir }})</dd>
+                                                                    <dt>Lunas</dt>
+                                                                    <dd>{{ $trx->lunas==1?'Sudah':'Belum' }}</dd>
                                                                 </dl>
                                                             </div>
                                                             <div class="col-4">
@@ -371,7 +381,7 @@
                                         <!-- /.modal-dialog -->
                                         <div class="form-group float-right mb-0">
                                         @can('transaksi-edit')
-                                        @if($trx->lunas===null | $trx->lunas===0)
+                                        @if(($trx->lunas===null | $trx->lunas===0) & $trx->status->name==='Selesai')
                                         <a href="#" class="text-warning" data-toggle="modal"
                                             data-target="#lunaskan_{{ str_replace("/","",$trx->id) }}"><i
                                                 class="fa fa-check"></i></a>
@@ -660,9 +670,9 @@
 @endsection
 
 @push('scripts')
+
 <script type="text/javascript">
     $(document).ready(function () {
-        $('.select2').select2();
 
         $('#tbljemput_id').on('change', function(){ 
             $.ajax({
