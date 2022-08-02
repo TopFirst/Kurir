@@ -53,11 +53,11 @@
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-2 m-0">
                         <div class="form-group m-0">
-                            <label for="cmblunas" class="col-form-label">Lunas</label>
+                            <label for="cmblunas" class="col-form-label">Setoran</label>
                             <select name="cmblunas" id="cmblunas" class="form-control form-control-sm select2">
                                     <option value="0" {{ $lunas==0?'selected':'' }}>--Semua--</option>
-                                    <option value="1" {{ $lunas==1?'selected':'' }}>Sudah</option>
-                                    <option value="2" {{ $lunas==2?'selected':'' }}>Belum</option>
+                                    <option value="1" {{ $lunas==1?'selected':'' }}>Sudah Setor</option>
+                                    <option value="2" {{ $lunas==2?'selected':'' }}>Belum Setor</option>
                                 </select>
                         </div>
                     </div>
@@ -232,6 +232,9 @@
                         <div class="row">
                             <div class="col-lg-12 mb-2">
                                 <h4 class="float-left mt-1">Tabel Pengantaran</h4>
+                                @can('transaksi-edit')
+                                <button id="btnSubmitLunas" class="btn btn-default float-right">Setor</button>
+                                @endcan
                                 <a href="#" data-toggle="modal" data-target="#newantar"
                                     class="btn btn-secondary float-right">Baru</a>
                                 <div class="modal fade" id="newantar">
@@ -287,10 +290,15 @@
                                 </div>
                             </div>
                         </div>
-                        <table class="table table-bordered small">
+                        <table class="table table-bordered small" id="tblpengantaran">
                             <thead>
                                 <tr>
-                                    <th>No</th>
+                                    <th>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="chkSelectAll">
+                                            <label class="form-check-label" for="chkID">No</label>
+                                          </div>
+                                    </th>
                                     <th>Kode</th>
                                     <th>Alamat</th>
                                     <th>Seller</th>
@@ -304,7 +312,16 @@
                                @endphp
                                 @foreach ($transaksis_antar as $key => $trx)
                                 <tr>
-                                    <td>{{ $i++; }}</td>
+                                    <td>
+                                        <div class="form-check">
+                                            @if(($trx->lunas===null | $trx->lunas===0) & $trx->status->name==='Selesai')
+                                            <input class="form-check-input" type="checkbox" value="{{$trx->id}}" id="chkID">
+                                            @endif
+                                            <label class="form-check-label" for="chkID">
+                                              {{$i++;}}
+                                            </label>
+                                          </div>
+                                    </td>
                                     <td>
                                         <a href="#" data-toggle="modal"
                                             data-target="#show2_{{ str_replace("/","",$trx->id) }}">{{ $trx->id }}</a>
@@ -394,7 +411,7 @@
                                                             @csrf
                                                             @method('POST')
                                                             <input type="hidden" name="id" value="{{$trx->id}}"/>
-                                                            <p>Lunaskan transaksi ini <b>{{ $trx->id }}</b>?
+                                                            <p>Tandai transaksi ini <b>{{ $trx->id }}</b> sudah disetor?
                                                             </p>
                                                             <div class="justify-content-between">
                                                                 <button type="button" class="btn btn-md btn-default"
@@ -673,7 +690,9 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-
+        $("#chkSelectAll").click(function () {
+             $('#tblpengantaran :checkbox').not(this).prop('checked', this.checked);
+         });
         $('#tbljemput_id').on('change', function(){ 
             $.ajax({
                             // method:"POST",
@@ -700,6 +719,50 @@
                             }
                         });
         })
+
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $(document).on('click', "#btnSubmitLunas", function () {
+          if(confirm('Apakah yakin ingin menandai transaksi ini sebagai Sudah Setor?'))
+            {
+                var data = $("#tblpengantaran :checkbox")
+                             .map(function () {
+                                 if (this.checked)
+                                     return this.value;
+                             })
+                             .get()
+                             .join();
+                        if(data=="")
+                             return;
+                             console.log(data);
+                        $.ajax({
+                            method:"POST",
+                            url: "{{ route ('transaksi.lunaskans') }}",
+                            data : {
+                                    data : JSON.stringify(data)
+                                },
+                            // dataType: 'json',
+                            success: function(data) {
+                                if(data.success){
+                                    location.reload();
+                                }
+                                
+                            },
+                            error: function(jqXHR, textStatus, errorThrown){
+                                // alert('Error: ' + textStatus + ' - ' + errorThrown);
+                                var responseText = jQuery.parseJSON(jqXHR.responseText);
+                                console.error(responseText);
+                                return false;
+                            }
+                        });
+
+            }
+          
+        });
 
     });
     function isi_catatan(id)

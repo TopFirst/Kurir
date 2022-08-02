@@ -889,6 +889,36 @@ class TransaksiController extends Controller
             ]
        );
     }
+    /**
+     * hapus transaksi pakai json.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function lunaskans(Request $request)
+    {
+        request()->validate([
+            'data' => 'required',
+        ]);
+        $ids=explode(',',json_decode(request('data')));
+        foreach($ids as $id)
+        {
+            // if(Tblantar::where('id',$id)->exists())
+            // {
+                if($id==null)
+                    continue;
+                $antar=Tblantar::find($id);
+                $antar->lunas=1;
+                $antar->save();
+            // }
+        }       
+        return response()->json(
+            [
+              'success' => true,
+              'message' => "Transaksi berhasil ditandai sebagai lunas",
+            ]
+       );
+    }
     /*
     Get jemput detail untuk tampilan kurir pas pengantaran
     */

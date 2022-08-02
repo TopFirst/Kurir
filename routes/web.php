@@ -73,6 +73,7 @@ Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->middleware('auth')->name('home');
 
 Route::post('/transaksi/hapus', [TransaksiController::class, 'hapus'])->middleware('auth')->name('transaksi.hapus');
+Route::post('/transaksi/lunaskans', [TransaksiController::class, 'lunaskans'])->middleware('auth')->name('transaksi.lunaskans');
 Route::get('/transaksi/GetJemput',[TransaksiController::class,'GetJemput'])->name('transaksi.GetJemput');
 
 Route::get('/admin', [HomeController::class, 'index'])->middleware('auth')->name('admin');
