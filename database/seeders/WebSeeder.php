@@ -102,6 +102,14 @@ class WebSeeder extends Seeder
             'parameter_unit' => 'Rb',
             ]);
         }
+       if (!AppConfig::where('slug','tipe-pendapatan')->exists()) {
+        $ac = AppConfig::create([
+            'slug' => 'tipe-pendapatan',
+            'parameter_name' => 'Tipe Pendapatan',
+            'parameter_value' => '1', // 1->untuk owner, 2->untuk kurir
+            'parameter_unit' => '/Trx',
+            ]);
+        }
        
         if (!AppConfig::where('slug','default-ongkir')->exists()) {
             $default_ongkir = AppConfig::create([

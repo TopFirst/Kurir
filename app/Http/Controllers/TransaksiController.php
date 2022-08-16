@@ -700,6 +700,7 @@ class TransaksiController extends Controller
     function ongkir_bersih ($ongkir)
     {
         $jatah_owner = AppConfig::where('slug','pendapatan-owner')->first();
+        $tipe = AppConfig::where('slug','tipe-pendapatan')->first();
         // $display=collect([
         //     $jatah_owner->id,
         //     $jatah_owner->parameter_name,
@@ -709,15 +710,25 @@ class TransaksiController extends Controller
         // $display->dd();
         $ongkir_baru=0;
         $param_unit=$jatah_owner->parameter_unit;
-        if($param_unit=="%")
+        if($tipe->parameter_value==1)
         {
-            $ongkir_baru= ((int)$ongkir)-(((int)$jatah_owner->parameter_value)/100*$ongkir);
+            if($param_unit=="%")
+            {
+                $ongkir_baru= ((int)$ongkir)-(((int)$jatah_owner->parameter_value)/100*$ongkir);
+            }
+            elseif($param_unit=="Rb")
+            {
+                $ongkir_baru= (((int)$ongkir)-((int)$jatah_owner->parameter_value));
+            }
         }
-        elseif($param_unit=="Rb")
+        elseif($tipe->parameter_value==2)
         {
-            $ongkir_baru= (int)$ongkir;
-            $ongkir_baru-= (int)$jatah_owner->parameter_value;
+            if($param_unit=="%")
+                $ongkir_baru= (((int)$jatah_owner->parameter_value)/100*$ongkir);
+            elseif($param_unit=="Rb")
+                $ongkir_baru= (int)$jatah_owner->parameter_value;
         }
+
 
         // $display=collect([
         //     $ongkir,

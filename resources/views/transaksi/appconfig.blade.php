@@ -40,6 +40,16 @@
                                                 <input type="text" class="form-control" name="parameter_unit" value="{{ $item->parameter_unit }}" readonly/>
                                             </span>
                                         </div>
+                                    @elseif($item->slug=='tipe-pendapatan')
+                                        <div class="input-group col-lg-6">
+                                            <select name="parameter_value" class="form-control" id="parameter_value">
+                                                <option value="1" {{$item->parameter_value == 1 ? 'selected' : ''}}>Untuk Owner</option>
+                                                <option value="2" {{$item->parameter_value == 2  ? 'selected' : ''}}>Untuk Kurir</option>
+                                            </select>
+                                            <span class="input-group-append col-3 m-0 p-0">
+                                                <input type="text" class="form-control"  name="parameter_unit" value="{{ $item->parameter_unit }}" readonly>
+                                            </span>
+                                        </div>
                                     @else
                                         <div class="input-group col-lg-6">
                                             <input type="text" class="form-control col-9"  name="parameter_value" value="{{ $item->parameter_value }}" required>
