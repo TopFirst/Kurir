@@ -514,6 +514,7 @@
                                     <th>No</th>
                                     <th>ID</th>
                                     <th>Alamat</th>
+                                    <th>Seller</th>
                                     <th>Talangan</th>
                                 </tr>
                             </thead>
@@ -580,6 +581,9 @@
                                             </div>
                                             <!-- /.modal-dialog -->
                                         </div>
+                                        @can('transaksi-edit')
+                                        <a href="{{ route('transaksi.edit',$trx->id) }}" class="text-info"><i class="fa fa-edit"></i></a>
+                                        @endcan
                                         <!-- /.modal -->
                                         @can('transaksi-delete')
                                         <a href="#" class="text-danger" data-toggle="modal"
@@ -616,8 +620,8 @@
 
                                     </td>
                                     <td>{{ $trx->deskripsi }}</td>
+                                    <td>{{ $trx->seller->nama??$trx->hp_seller }}</td>
                                     <td>{{ $trx->talangan }} ({{ $trx->ongkir }})
-
                                     </td>
                                 </tr>
                                 @endforeach

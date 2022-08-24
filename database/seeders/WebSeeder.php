@@ -97,7 +97,7 @@ class WebSeeder extends Seeder
        if (!AppConfig::where('slug','pendapatan-owner')->exists()) {
         $ac = AppConfig::create([
             'slug' => 'pendapatan-owner',
-            'parameter_name' => 'Pendapatan Owner',
+            'parameter_name' => 'Pendapatan',
             'parameter_value' => '2',
             'parameter_unit' => 'Rb',
             ]);
