@@ -39,10 +39,10 @@
                                     <dd>{{ $transaksi->created_at }}</dd>
                                     <dt>Tanggal Input Pengantaran</dt>
                                     <dd>{{ $transaksi->antar->created_at??"-" }}</dd>
+                                    <dt>Seller</dt>
+                                    <dd>{{ $transaksi->seller->nama??$transaksi->hp_seller}}</dd>
                                     <dt>Deskripsi</dt>
-                                    <dd>({{ $transaksi->hp_seller }}) {{ $transaksi->deskripsi }}</dd>
-                                    <dt>Catatan</dt>
-                                    <dd>{{ $trx->antar->catatan??'-' }}</dd>
+                                    <dd>{{ $transaksi->deskripsi }}</dd>
                                 </dl>
                             </div>
                             <div class="col-4">
@@ -53,6 +53,8 @@
                                     <dd>{{ $transaksi->antar->updated_at??"-" }}</dd>
                                     <dt>Talangan</dt>
                                     <dd>{{ $transaksi->talangan }} ({{ $transaksi->ongkir }})</dd>
+                                    <dt>Catatan</dt>
+                                    <dd>{{ $trx->antar->catatan??'-' }}</dd>
                                 </dl>
                             </div>
                             <div class="col-4">

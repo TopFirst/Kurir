@@ -740,9 +740,10 @@
                              })
                              .get()
                              .join();
+                             //console.log(data);
                         if(data=="")
                              return;
-                             console.log(data);
+                             
                         $.ajax({
                             method:"POST",
                             url: "{{ route ('transaksi.lunaskans') }}",
@@ -750,8 +751,8 @@
                                     data : JSON.stringify(data)
                                 },
                             // dataType: 'json',
-                            success: function(data) {
-                                if(data.success){
+                            success: function(result) {
+                                if(result.success){
                                     location.reload();
                                 }
                                 

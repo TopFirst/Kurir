@@ -596,7 +596,7 @@ class TransaksiController extends Controller
         $statuses=Status::get();
         $transaksis_antar = Tblantar::with('kurir','status', 'jemput')->where(function($query) use($mulai,$akhir){
             $query->where(function($q) use($mulai,$akhir){
-                $q->where('created_at','>',$mulai)->where('created_at','<',$akhir);
+                 $q->where('created_at','>',$mulai)->where('created_at','<',$akhir);
             })
             ->orWhere('status_id',1);
         })
@@ -912,11 +912,12 @@ class TransaksiController extends Controller
             'data' => 'required',
         ]);
         $ids=explode(',',json_decode(request('data')));
+
         foreach($ids as $id)
         {
             // if(Tblantar::where('id',$id)->exists())
             // {
-                if($id==null)
+                if($id==null || $id=='on')
                     continue;
                 $antar=Tblantar::find($id);
                 $antar->lunas=1;
