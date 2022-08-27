@@ -156,6 +156,9 @@ class HomeController extends Controller
                     ->addColumn('kurirjemput', function($row){
                             return $row->kurir->name??'-';
                     })
+                    ->addColumn('seller', function($row){
+                            return $row->seller->nama??$row->hp_seller;
+                    })
                     ->addColumn('status', function($row){
                         return '<span class="badge badge-warning">Belum Input</span>';
                     })
@@ -188,6 +191,9 @@ class HomeController extends Controller
                     })
                     ->addColumn('kurirjemput', function($row){
                             return $row->kurir->name??'-';
+                    })
+                    ->addColumn('seller', function($row){
+                            return $row->seller->nama??$row->hp_seller;
                     })
                     ->addColumn('status', function($row){
                         $stt='<span class="badge badge-warning">Belum Input</span>';

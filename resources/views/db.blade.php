@@ -265,7 +265,7 @@ var cancel_table;
             columns: [
                 { data: 'id', name: 'id', orderable:false },
                 { data: 'kurirjemput', name: 'kurirjemput', orderable:false },
-                { data: 'hp_seller', name: 'hp_seller', orderable:false },
+                { data: 'seller', name: 'seller', orderable:false },
                 { data: 'deskripsi', name: 'deskripsi', orderable:false },
                 { data: 'status', name: 'status', orderable:false },
             ]
@@ -283,7 +283,7 @@ var cancel_table;
             columns: [
                 { data: 'id', name: 'id', orderable:false },
                 { data: 'kurirjemput', name: 'kurirjemput', orderable:false },
-                { data: 'hp_seller', name: 'hp_seller', orderable:false },
+                { data: 'seller', name: 'seller', orderable:false },
                 { data: 'deskripsi', name: 'deskripsi', orderable:false },
                 { data: 'status', name: 'status', orderable:false },
             ]
