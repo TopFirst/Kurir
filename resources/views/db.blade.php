@@ -25,13 +25,30 @@
         <div class="container-fluid">
             <!-- Small boxes (Stat box) -->
             <div class="row">
+                                <!-- total pengantaran -->
+                                <div class="col-lg-3 col-6">
+                                    <!-- small box -->
+                                    <div class="small-box bg-success">
+                                        <div class="inner">
+                                            <h3 id="totalantar">0</h3>
+                
+                                            <p>Total Pengantaran</p>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="ion ion-stats-bars"></i>
+                                        </div>
+                                        <a href="{{ route('transaksi.admin') }}" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
+                                    </div>
+                                </div>
+                                <!-- ./col -->
+                <!-- total paket On Progress -->
                 <div class="col-lg-3 col-6">
                     <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
-                            <h3 id="totaljemput">0</h3>
+                            <h3 id="paket_onprocess">0</h3>
 
-                            <p>Total Penjemputan</p>
+                            <p>Paket On Process</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-bag"></i>
@@ -40,7 +57,7 @@
                     </div>
                 </div>
                 <!-- ./col -->
-                <div class="col-lg-3 col-6">
+                {{-- <div class="col-lg-3 col-6">
                     <!-- small box -->
                     <div class="small-box bg-success">
                         <div class="inner">
@@ -53,7 +70,7 @@
                         </div>
                         <a href="{{ route('transaksi.admin') }}" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
-                </div>
+                </div> --}}
                 <!-- ./col -->
                 <div class="col-lg-3 col-6">
                     <!-- small box -->
@@ -291,7 +308,8 @@ var cancel_table;
 
         otable.on('draw', function () {
             var dat=otable.ajax.json();
-            $("#totaljemput").text(dat['totaljemput']);
+            // $("#totaljemput").text(dat['totaljemput']);
+            $("#paket_onprocess").text(dat['paket_onprocess']);
             $("#totalantar").text(dat['totalantar']);
             $("#totalbeluminput").text(dat['recordsTotal']);
         });
