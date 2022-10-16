@@ -127,6 +127,14 @@ class WebSeeder extends Seeder
                 'parameter_unit' => 'Jam',
                 ]);
          }
+        if (!AppConfig::where('slug','disabled-btn-pengantaran')->exists()) {
+            $default_ongkir = AppConfig::create([
+                'slug' => 'disabled-btn-pengantaran',
+                'parameter_name' => 'Auto disable tombol pengantaran',
+                'parameter_value' => '0',
+                'parameter_unit' => 'Yes/No',
+                ]);
+         }
 
     }
 }

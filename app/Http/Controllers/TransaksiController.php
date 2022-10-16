@@ -89,10 +89,14 @@ class TransaksiController extends Controller
      */
     public function ubahconfig(Request $request, $id)
     {
+        // $collection=collect([$request->parameter_value,$request->parameter_unit]);
+        // $collection->dd();
+        
          request()->validate([
             'parameter_value' => 'required',
             'parameter_unit' => 'required',
         ]);
+
 
         $input = $request->all();
         $config = AppConfig::find($id);
@@ -647,11 +651,24 @@ class TransaksiController extends Controller
         //ambil data seller untuk list pencarian
         $sellers=Seller::all();
         
+        //cek apakah btn pengantaran disabled
+        //disabled tombol jika dibawah dari jam cutoff
+        $btn_val = AppConfig::where('slug','disabled-btn-pengantaran')->first();
+        $btn_stt_disabled = $btn_val->parameter_value>0?true:false;
+        $jam_skrg=Carbon::parse($tanggalan)->format('H'); $jam_cutoff=$durasiCutoff->parameter_value;
+        $belum_cutoff=$jam_skrg<=$jam_cutoff;
+        $show_button=true;
+        if($btn_stt_disabled && $belum_cutoff)
+        {
+            $show_button=false;
+        }
+
         return view('transaksi.kurir',compact('transaksis_antar','transaksis_jemput','kurirs','transaksis_belum_antar','transaksis_jemput_cancel','statuses','sellers'))
         ->with('id_pengguna',$user_id)
         ->with('id_status',$id_status)
         ->with('tanggal',$tanggalan)
         ->with('lunas',$lunas)
+        ->with('btn_disabled',$show_button)
         ->with('hp',$penjual);
     }
 

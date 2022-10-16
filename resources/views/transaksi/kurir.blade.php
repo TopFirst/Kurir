@@ -232,6 +232,7 @@
                         <div class="row">
                             <div class="col-lg-12 mb-2">
                                 <h4 class="float-left mt-1">Tabel Pengantaran</h4>
+                                @if($btn_disabled)
                                 @can('transaksi-edit')
                                 <button id="btnSubmitLunas" class="btn btn-default float-right">Setor</button>
                                 @endcan
@@ -288,6 +289,7 @@
                                     </div>
                                     <!-- /.modal-dialog -->
                                 </div>
+                                @endif
                             </div>
                         </div>
                         <table class="table table-bordered small" id="tblpengantaran">

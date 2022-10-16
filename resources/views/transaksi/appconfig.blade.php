@@ -24,7 +24,7 @@
     <div class="container-fluid">
         @foreach ($app_configs as $item)
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="card m-0 p-0">
                         <div class="card-body m-0 p-2">
                             <form method="POST" action="{{ route('transaksi.ubahconfig',$item->id) }}">
@@ -32,13 +32,19 @@
                                 @method('POST')
                                 {{-- <input type="hidden" name="id" value="{{ $item->id }}"> --}}
                                 <div class="form-group row m-0 p-0">
-                                    <label for="parameter_value" class="col-lg-3 mt-1">{{ $item->parameter_name }}</label>
+                                    <label for="parameter_value" class="col-lg-5 mt-1">{{ $item->parameter_name }}</label>
                                     @if($item->slug=='cut-off-time')
                                         <div class="input-group col-lg-6">
                                             <input type="number" min="0" step="1" class="form-control col-9"  name="parameter_value" value="{{ $item->parameter_value }}" required>
                                             <span class="input-group-append col-3 m-0 p-0">
                                                 <input type="text" class="form-control" name="parameter_unit" value="{{ $item->parameter_unit }}" readonly/>
                                             </span>
+                                        </div>
+                                    @elseif($item->slug=='disabled-btn-pengantaran')
+                                        <div class="col-lg-6">
+                                            <input type="hidden" name="parameter_value" value="0">
+                                            <input type="checkbox" name="parameter_value" id="chk_btn_antar" class="form-control form-control-sm float-left" {{$item->parameter_value>0?'checked':''}}/>
+                                            <input type="hidden" name="parameter_unit" value="{{$item->parameter_unit}}"/>
                                         </div>
                                     @elseif($item->slug=='tipe-pendapatan')
                                         <div class="input-group col-lg-6">
@@ -62,7 +68,7 @@
                                         </div>
                                     @endif
                                     
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-1">
                                         <button type="submit" class="btn btn-info float-right">Submit</button>
                                     </div>
                                 </div>
@@ -86,7 +92,9 @@
 <script src="{{ asset('plugins/daterangepicker/daterangepicker.js') }}"></script>
 <script type="text/javascript">
     $(function () {
-
+        $('#chk_btn_antar').on('change', function(){
+        this.value = this.checked ? 1 : 0;
+        }).change();
     });
 </script>
 @endpush
