@@ -918,7 +918,40 @@ class TransaksiController extends Controller
        );
     }
     /**
-     * hapus transaksi pakai json.
+     * hapus transaksi pengantaran banyak menggunakan json.
+     * di halaman tabel kurir
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function hapuskans(Request $request)
+    {
+        request()->validate([
+            'data' => 'required',
+        ]);
+        $ids=explode(',',json_decode(request('data')));
+
+        foreach($ids as $id)
+        {
+                if($id==null || $id=='on')
+                    continue;
+                if(Tblantar::where('id',$id)->exists())
+                {
+                    $transaksiantar=Tblantar::find($id);
+                    if($transaksiantar->status_id==1)
+                        {
+                            $transaksiantar->delete();
+                        }
+                }
+        }       
+        return response()->json(
+            [
+              'success' => true,
+              'message' => "Transaksi pengantaran berhasil dihapus",
+            ]
+       );
+    }
+    /**
+     * lunaskan transaksi bundle.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -930,23 +963,35 @@ class TransaksiController extends Controller
         ]);
         $ids=explode(',',json_decode(request('data')));
 
+        $ErrMsg=array();
         foreach($ids as $id)
         {
-            // if(Tblantar::where('id',$id)->exists())
-            // {
                 if($id==null || $id=='on')
                     continue;
                 $antar=Tblantar::find($id);
-                $antar->lunas=1;
-                $antar->save();
-            // }
+                if(($antar->lunas===null | $antar->lunas===0) & $antar->status->name==='Selesai')
+                {
+                    $antar->lunas=1;
+                    $antar->save();
+                }
+                else
+                {
+                array_push($ErrMsg,"Status transaksi " . $antar->id . " belum selesai");
+                }
         }       
+        $err= join(", ",$ErrMsg);
+        $_SESSION["success"] = "coba ahh";
+
+        if($ErrMsg)
+            $_SESSION["failed"] = "gagal nih";
+
         return response()->json(
-            [
-              'success' => true,
-              'message' => "Transaksi berhasil ditandai sebagai lunas",
-            ]
-       );
+                [
+                  'success' => true,
+                  'message' => "Transaksi berhasil ditandai sebagai lunas",
+                ]
+           );
+
     }
     /*
     Get jemput detail untuk tampilan kurir pas pengantaran

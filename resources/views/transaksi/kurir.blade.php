@@ -236,6 +236,9 @@
                                 @can('transaksi-edit')
                                 <button id="btnSubmitLunas" class="btn btn-default float-right">Setor</button>
                                 @endcan
+                                @can('transaksi-delete')
+                                <button id="btnDeletePengantaran" style="height: 37.96px;" class="btn btn-outline-danger float-right mx-1"><i class="fas fa-trash-alt"></i></button>
+                                @endcan
                                 <a href="#" data-toggle="modal" data-target="#newantar"
                                     class="btn btn-secondary float-right">Baru</a>
                                 <div class="modal fade" id="newantar">
@@ -316,9 +319,9 @@
                                 <tr>
                                     <td>
                                         <div class="form-check">
-                                            @if(($trx->lunas===null | $trx->lunas===0) & $trx->status->name==='Selesai')
+                                            {{-- @if(($trx->lunas===null | $trx->lunas===0) & $trx->status->name==='Selesai') --}}
                                             <input class="form-check-input" type="checkbox" value="{{$trx->id}}" id="chkID">
-                                            @endif
+                                            {{-- @endif --}}
                                             <label class="form-check-label" for="chkID">
                                               {{$i++;}}
                                             </label>
@@ -755,12 +758,51 @@
                             // dataType: 'json',
                             success: function(result) {
                                 if(result.success){
-                                    location.reload();
+                                    location.reload(true);
+                                    return false;
                                 }
                                 
                             },
                             error: function(jqXHR, textStatus, errorThrown){
                                 // alert('Error: ' + textStatus + ' - ' + errorThrown);
+                                var responseText = jQuery.parseJSON(jqXHR.responseText);
+                                console.error(responseText);
+                                return false;
+                            }
+                        });
+
+            }
+          
+        });
+        $(document).on('click', "#btnDeletePengantaran", function () {
+          if(confirm('Apakah yakin ingin menghapus transaksi yang ditandai?'))
+            {
+                var data = $("#tblpengantaran :checkbox")
+                             .map(function () {
+                                 if (this.checked)
+                                     return this.value;
+                             })
+                             .get()
+                             .join();
+                        if(data=="")
+                        {
+                            alert('No Data selected')
+                            return;
+                        }
+                             
+                        $.ajax({
+                            method:"POST",
+                            url: "{{ route ('transaksi.hapuskans') }}",
+                            data : {
+                                    data : JSON.stringify(data)
+                                },
+                            success: function(result) {
+                                if(result.success){
+                                    location.reload(true);
+                                }
+                                
+                            },
+                            error: function(jqXHR, textStatus, errorThrown){
                                 var responseText = jQuery.parseJSON(jqXHR.responseText);
                                 console.error(responseText);
                                 return false;
