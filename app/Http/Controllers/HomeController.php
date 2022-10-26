@@ -138,6 +138,7 @@ class HomeController extends Controller
         $totaljemput=Tbljemput::without('kurir','seller','antar')->count();
         $totalantar=Tblantar::without('kurir','status', 'jemput')->count();
         $paket_onprocess=Tblantar::where("status_id", 1)->sum('talangan');
+        $jml_paket_onprocess=Tblantar::where("status_id", 1)->count();
 
 
             return Datatables::of($data)
@@ -167,6 +168,7 @@ class HomeController extends Controller
                     ->with('totaljemput',$totaljemput)
                     ->with('totalantar',$totalantar)
                     ->with('paket_onprocess',$paket_onprocess)
+                    ->with('jml_paket_onprocess',$jml_paket_onprocess)
                     ->make(true);
     }
     /**

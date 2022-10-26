@@ -152,7 +152,7 @@
                                                 <th>Kurir</th>
                                                 <th>Seller</th>
                                                 <th>Alamat</th>
-                                                <th>Status</th>
+                                                <th>Talangan</th>
                                             </tr>
                                         </thead>
                                         <tbody></tbody>
@@ -302,14 +302,17 @@ var cancel_table;
                 { data: 'kurirjemput', name: 'kurirjemput', orderable:false },
                 { data: 'seller', name: 'seller', orderable:false },
                 { data: 'deskripsi', name: 'deskripsi', orderable:false },
-                { data: 'status', name: 'status', orderable:false },
+                { data: 'talangan', name: 'talangan', orderable:false },
             ]
         });
 
         otable.on('draw', function () {
             var dat=otable.ajax.json();
             // $("#totaljemput").text(dat['totaljemput']);
-            $("#paket_onprocess").text(dat['paket_onprocess']);
+            //var onP=dat['jml_paket_onprocess'] . "-" . dat['paket_onprocess'];
+            let jml_paket_onprocess=dat['jml_paket_onprocess'];
+            let paket_onprocess=dat['paket_onprocess'];
+            $("#paket_onprocess").text("("+jml_paket_onprocess+") "+paket_onprocess);
             $("#totalantar").text(dat['totalantar']);
             $("#totalbeluminput").text(dat['recordsTotal']);
         });
