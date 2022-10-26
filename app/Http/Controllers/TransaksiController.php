@@ -779,7 +779,8 @@ class TransaksiController extends Controller
         // $display->dd();
         if($input['registered_seller']>0)
         {
-            $input['hp_seller']=$input['registered_seller'];
+            $seller= Seller::find($input['registered_seller']);;
+            $input['hp_seller']=$seller->hp;
         }
         else
         {
