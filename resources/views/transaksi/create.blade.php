@@ -58,7 +58,7 @@
 			<div class="col-xs-12 col-sm-12 col-md-12">
 		        <div class="form-group">
 		            <strong>Nama Customer:</strong>
-		            <input type="text"  name="nama_customer" class="form-control" placeholder="Nama customer..">
+		            <input type="text"  name="nama_customer" class="form-control" placeholder="Nama customer.." required>
 		        </div>
 		    </div>
 
