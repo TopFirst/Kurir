@@ -785,13 +785,12 @@ class TransaksiController extends Controller
         else
         {
             request()->validate([
-                'hp_seller' => 'required|regex:/(08)[0-9]{9}/',
+                'hp_seller' => 'required|regex:/(628)[0-9]{9}/',
             ]);
             if(!Seller::where('hp',$request->hp_seller)->exists())
             {
                 Seller::create(['hp'=>$request->hp_seller,'nama'=>$request->nama_seller]);
             }
-
         }
         if($input['ongkir']==0)
             $input['ongkir']=$input['custom_ongkir'];
