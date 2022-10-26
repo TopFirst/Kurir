@@ -76,6 +76,7 @@ Route::post('/transaksi/hapus', [TransaksiController::class, 'hapus'])->middlewa
 Route::post('/transaksi/lunaskans', [TransaksiController::class, 'lunaskans'])->middleware('auth')->name('transaksi.lunaskans');
 Route::post('/transaksi/hapuskans', [TransaksiController::class, 'hapuskans'])->middleware('auth')->name('transaksi.hapuskans');
 Route::get('/transaksi/GetJemput',[TransaksiController::class,'GetJemput'])->name('transaksi.GetJemput');
+Route::get('/transaksi/autocomplete',[TransaksiController::class,'autocomplete'])->name('transaksi.autocomplete');
 
 Route::get('/admin', [HomeController::class, 'index'])->middleware('auth')->name('admin');
 Route::get('/cekresi',[HomeController::class,'cekresi'])->name('home.cekresi');

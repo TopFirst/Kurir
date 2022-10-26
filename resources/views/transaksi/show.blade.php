@@ -53,8 +53,8 @@
                                     <dd>{{ $transaksi->antar->updated_at??"-" }}</dd>
                                     <dt>Talangan</dt>
                                     <dd>{{ $transaksi->talangan }} ({{ $transaksi->ongkir }})</dd>
-                                    <dt>Catatan</dt>
-                                    <dd>{{ $trx->antar->catatan??'-' }}</dd>
+                                    <dt>Nama Customer</dt>
+                                    <dd>{{ $transaksi->nama_customer??'-' }}</dd>
                                 </dl>
                             </div>
                             <div class="col-4">
@@ -64,6 +64,8 @@
                                 <dd>{{ $transaksi->antar->kurir->name??'-' }}</dd>
                                 <dt>Status</dt>
                                 <dd><strong>{{ $transaksi->antar->status->name??'Belum Input' }}</strong><br>{{ $transaksi->antar->catatan??'' }}</dd>
+                                <dt>Catatan</dt>
+                                <dd>{{ $trx->antar->catatan??'-' }}</dd>
                             </div>
                         </div>
                     </div>

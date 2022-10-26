@@ -138,7 +138,7 @@
                                                             <dt>Tanggal Buat</dt>
                                                             <dd>{{ $trx->created_at }}</dd>
                                                             <dt>Alamat</dt>
-                                                            <dd>{{ $trx->deskripsi }}</dd>
+                                                            <dd>{{ $trx->nama_customer }} - {{ $trx->deskripsi }}</dd>
                                                             <dt>Ongkos Kirim</dt>
                                                             <dd>{{ $trx->ongkir }}</dd>
                                                         </dl>
@@ -358,7 +358,7 @@
                                                                     <dt>Tanggal Jemput</dt>
                                                                     <dd>{{ $trx->jemput->created_at }}</dd>
                                                                     <dt>Alamat</dt>
-                                                                    <dd>{{ $trx->jemput->deskripsi }}</dd>
+                                                                    <dd>{{ $trx->jemput->nama_customer }} - {{ $trx->jemput->deskripsi }}</dd>
                                                                     <dt>Talangan</dt>
                                                                     <dd>{{ $trx->jemput->talangan }} ({{ $trx->ongkir }})</dd>
                                                                     <dt>Lunas</dt>
@@ -562,7 +562,7 @@
                                                                     <dt>Tanggal Jemput</dt>
                                                                     <dd>{{ $trx->created_at }}</dd>
                                                                     <dt>Alamat</dt>
-                                                                    <dd>{{ $trx->deskripsi }}</dd>
+                                                                    <dd>{{ $trx->nama_customer }} - {{ $trx->deskripsi }}</dd>
                                                                     <dt>Talangan</dt>
                                                                     <dd>{{ $trx->talangan }} ({{ $trx->ongkir }})</dd>
                                                                 </dl>

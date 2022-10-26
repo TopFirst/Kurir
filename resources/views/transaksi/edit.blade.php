@@ -92,6 +92,13 @@
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-group">
+                                        <strong>Nama Customer:</strong>
+                                        {!! Form::text('nama_customer', null, array('placeholder' => 'nama customer..','class' =>
+                                        'form-control')) !!}
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
                                         <strong>Alamat:</strong>
                                         {!! Form::textarea('deskripsi', null, array('placeholder' => 'Deskripsi paket','class' =>
                                         'form-control', 'rows'=>2)) !!}

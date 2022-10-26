@@ -104,10 +104,14 @@
 <!-- datetimepicker -->
 <script src="{{ asset('plugins/datetimepicker/jquery.datetimepicker.full.js') }}"></script>
 
+
 <!-- Bootstrap 4 -->
 <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- Select2 -->
 <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
+<!-- typeahead -->
+<script src="{{ asset('plugins/typeahead/bootstrap3-typeahead.min.js') }}"></script>
+
 <!-- InputMask -->
 <!-- <script src="{{ asset('plugins/moment/moment.min.js') }}"></script>
 <script src="{{ asset('plugins/inputmask/min/jquery.inputmask.bundle.min.js') }}"></script> -->

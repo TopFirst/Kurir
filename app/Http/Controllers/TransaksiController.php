@@ -573,8 +573,9 @@ class TransaksiController extends Controller
      */
     public function cekseller()
     {
-        if(request('hp_seller'))
-            return Seller::where('hp',request('hp_seller'))->first()->id??0;
+        $dat=request('hp_seller');
+        if($dat)
+            return Seller::where('nama',$dat)->first()->id??0;
         return 0;
     }
     /**
@@ -769,23 +770,58 @@ class TransaksiController extends Controller
             // 'user_id' => 'required',
             'deskripsi' => 'required',
             'hp_seller' => 'required',
+            'registered_seller' => 'required',
             'ongkir' => 'required',
             'talangan' => 'required',
         ]);
         $input = $request->all();
+        //         $display=collect([$input]);
+        // $display->dd();
+        if($input['registered_seller']>0)
+        {
+            $input['hp_seller']=$input['registered_seller'];
+        }
+        else
+        {
+            request()->validate([
+                'hp_seller' => 'required|regex:/(08)[0-9]{9}/',
+            ]);
+            if(!Seller::where('hp',$request->hp_seller)->exists())
+            {
+                Seller::create(['hp'=>$request->hp_seller,'nama'=>$request->nama_seller]);
+            }
+
+        }
         if($input['ongkir']==0)
             $input['ongkir']=$input['custom_ongkir'];
         $input['user_id']=$request->user_id??Auth::user()->id;
         //simpan seller baru jika no belum tersimpan
-        if(!Seller::where('hp',$request->hp_seller)->exists())
-        {
-            Seller::create(['hp'=>$request->hp_seller]);
-        }
-        //simapn data penjemputan
+
+
+        //simpan data penjemputan
         Tbljemput::create($input);
     
         return redirect()->route('transaksi.index')
                         ->with('success','transaksi baru berhasil dibuat.');
+    }
+    // get autocomplete seller data from database
+    public function autocomplete(Request $request)
+    {
+        request()->validate([
+            'query' => 'required',
+        ]);
+        $qr=request('query');
+        $data = Seller::select("nama")
+                ->where("nama","LIKE","%{$qr}%")
+                ->get();
+        // $data=array();
+        // foreach($hasil as $hsl)    
+        // {
+        //     $data[]=$hsl->nama;
+        // }    
+   
+         return response()->json($data);
+        //return json_encode($data);
     }
     /**
      * Store a newly created pengantaran dari tabel penjemputan.

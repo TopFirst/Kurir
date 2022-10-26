@@ -49,7 +49,7 @@ class HomeController extends Controller
                 $id_baru=Str::of(date('y'))->append(date('m'))->append('-'. $this->str_random());
             }
             $sellers=Seller::all();
-            return view('transaksi/create',compact('kurirs','sellers'))
+            return view('transaksi/create',compact('kurirs'))
             ->with('title', 'Kurir')
             ->with('id_baru', $id_baru)
             ->with('ongkir_dasar', $ongkir_dasar->parameter_value);

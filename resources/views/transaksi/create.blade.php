@@ -38,24 +38,33 @@
 			 @endcan
 			 <div class="col-xs-12 col-sm-12 col-md-12">
 		        <div class="form-group">
-		            <strong>HP Seller:</strong>
+		            <strong>HP Seller/Olshop:</strong>
 					<div class="input-group">
-					    <input type="text" name="hp_seller" class="form-control hp nokoma" placeholder="No. telepon" autocomplete="off" role="combobox" list="seller_list" aria-autocomplete="list" required>
+					    {{-- <input type="text" name="hp_seller" class="form-control hp nokoma" placeholder="No. telepon" autocomplete="off" role="combobox" list="seller_list" aria-autocomplete="list" required> --}}
+					    <input type="text" data-provide="typeahead" name="hp_seller" autocomplete="off" class="form-control hp nokoma" placeholder="No. telepon" required/>
 					    <div class="input-group-append d-none" id="terdaftar">
 					        <span class="input-group-text bg-success" id="id_seller"></span>
 					    </div>
+						<input type="hidden" name="registered_seller" id="registered_seller_id"/>
 					</div>
 		        </div>
 		    </div>
-			<datalist id="seller_list" role="listbox">
-				@foreach ($sellers as $seller)
-					<option value="{{ $seller->hp }}">{{ $seller->nama? $seller->nama.' - ':'' }} {{ $seller->deskripsi??'' }}</option>
-				@endforeach
-			</datalist>
+			<div class="col-xs-12 col-sm-12 col-md-12 d-none" id="div_seller_name">
+		        <div class="form-group">
+		            <strong>Nama Seller/Olshop:</strong>
+		            <input type="text"  name="nama_seller" class="form-control" placeholder="Nama seller..">
+		        </div>
+		    </div>
+			<div class="col-xs-12 col-sm-12 col-md-12">
+		        <div class="form-group">
+		            <strong>Nama Customer:</strong>
+		            <input type="text"  name="nama_customer" class="form-control" placeholder="Nama customer..">
+		        </div>
+		    </div>
 
 		    <div class="col-xs-12 col-sm-12 col-md-12">
 		        <div class="form-group">
-		            <strong>Alamat:</strong>
+		            <strong>Alamat Customer:</strong>
 		            <textarea name="deskripsi" class="form-control nokoma" placeholder="masukkan deskripsi paket" rows="3" required></textarea>
 		        </div>
 		    </div>
@@ -97,21 +106,43 @@
 		$('#custom_ongkir').hide();
 
 		//cek seller 
-		$(".hp").change(function(){
+		//$(".hp").change(function(){
+			$('.hp').on('change', function(evt,data) {
+				console.log(this.value);
 			$.ajax({
 				url: "{{ route ('transaksi.cekseller') }}", 
 				data: {hp_seller:this.value},
 				success: function(result){
 					if(result>0)
 					{
-						// console.log('masoook');
+						$("#registered_seller_id").val(result);
 						$("#id_seller").text(result);
 						$("#terdaftar").removeClass("d-none");
+						$("#div_seller_name").addClass("d-none");
+					}
+					else
+					{
+						$("#registered_seller_id").val(0);
+						$("#terdaftar").addClass("d-none");
+						$("#div_seller_name").removeClass("d-none");
 					}
 
 				}
 			});
+			return false;
 			//alert("The text has been changed." + this.value);
+		});
+		//cek typehead
+		var path = "{{ route('transaksi.autocomplete') }}";
+		$('input.nokoma').typeahead({
+			source:  function (query, process) {
+			return $.get(path, { query: query }, function (data) {
+				//console.log(data);
+					return process(data);
+				});
+			},
+			autoSelect:true,
+			displayText:function(item){return item.nama;}
 		});
 		//gak boleh ada character '
 		$('.nokoma').keydown(function(e) {

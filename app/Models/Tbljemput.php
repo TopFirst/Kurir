@@ -11,6 +11,7 @@ class Tbljemput extends Model
     protected $fillable = [
         'id',
         'user_id',
+        'nama_customer',
         'deskripsi',
         'hp_seller',
         'ongkir',
