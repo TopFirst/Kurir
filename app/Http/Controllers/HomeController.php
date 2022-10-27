@@ -137,7 +137,10 @@ class HomeController extends Controller
 
         $totaljemput=Tbljemput::without('kurir','seller','antar')->count();
         $totalantar=Tblantar::without('kurir','status', 'jemput')->count();
+
         $paket_onprocess=Tblantar::where("status_id", 1)->sum('talangan');
+        $ongkir_paket_onprocess=Tblantar::where("status_id", 1)->sum('ongkir');
+        $paket_onprocess=$paket_onprocess-$ongkir_paket_onprocess;
         $jml_paket_onprocess=Tblantar::where("status_id", 1)->count();
 
 

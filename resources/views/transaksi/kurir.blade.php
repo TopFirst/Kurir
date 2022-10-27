@@ -201,7 +201,7 @@
                                 @endcan
                             </div>
                             </td>
-                            <td>{{ $trx->deskripsi }}</td>
+                            <td>{{ $trx->nama_customer }} - {{ $trx->deskripsi }}</td>
                             <td>{{ $trx->seller->nama??$trx->hp_seller }}</td>
                             <td>{{ $trx->talangan }} ({{ $trx->ongkir }})</td>
                         </tr>
@@ -473,7 +473,7 @@
                                         @endcan
                                     </div>
                                     </td>
-                                    <td>{{ $trx->jemput->deskripsi }}</td>
+                                    <td>{{ $trx->jemput->nama_customer }} - {{ $trx->jemput->deskripsi }}</td>
                                     <td>{{ $trx->jemput->seller->nama??$trx->jemput->hp_seller }}</td>
                                     <td>
                                         @if ($trx->status->id==1)
@@ -624,7 +624,7 @@
                                         @endcan
 
                                     </td>
-                                    <td>{{ $trx->deskripsi }}</td>
+                                    <td>{{ $trx->nama_customer }} - {{ $trx->deskripsi }}</td>
                                     <td>{{ $trx->seller->nama??$trx->hp_seller }}</td>
                                     <td>{{ $trx->talangan }} ({{ $trx->ongkir }})
                                     </td>

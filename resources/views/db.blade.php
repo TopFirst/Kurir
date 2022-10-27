@@ -48,7 +48,7 @@
                         <div class="inner">
                             <h3 id="paket_onprocess">0</h3>
 
-                            <p>Paket On Process</p>
+                            <p><b id="jml_paket_onprocess"></b> Paket On Process</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-bag"></i>
@@ -312,7 +312,8 @@ var cancel_table;
             //var onP=dat['jml_paket_onprocess'] . "-" . dat['paket_onprocess'];
             let jml_paket_onprocess=dat['jml_paket_onprocess'];
             let paket_onprocess=dat['paket_onprocess'];
-            $("#paket_onprocess").text("("+jml_paket_onprocess+") "+paket_onprocess);
+            $("#paket_onprocess").text(paket_onprocess);
+            $("#jml_paket_onprocess").text(jml_paket_onprocess);
             $("#totalantar").text(dat['totalantar']);
             $("#totalbeluminput").text(dat['recordsTotal']);
         });
