@@ -362,7 +362,7 @@
                 },
                 { data: 'id', name: 'id' },
                 { data: 'seller', name: 'seller' },
-                { data: 'deskripsi', name: 'deskripsi', orderable:false },
+                { data: 'detail', name: 'detail', orderable:false },
                 { data: 'created_at', name: 'created_at' },
                 { data: 'kurirjemput', name: 'kurirjemput' },
                 { data: 'tglproses', name: 'tglproses' },

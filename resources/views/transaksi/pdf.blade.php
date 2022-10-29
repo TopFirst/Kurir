@@ -81,7 +81,7 @@
                     <td>{{ $i++ }}</td>
                     <td>{{ $trx->id }}</td>
                     <td>{{ $trx->hp_seller }}</td>
-                    <td>{{ $trx->deskripsi }}</td>
+                    <td>{{ $trx->nama_customer?$trx->nama_customer." - ":"" }}{{ $trx->deskripsi }}</td>
                     <td>{{ $trx->created_at }}</td>
                     <td>{{ $trx->kurir->name }}</td>
                     <td>{{ $trx->antar->updated_at??'-' }}</td>

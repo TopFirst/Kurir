@@ -462,6 +462,10 @@ class TransaksiController extends Controller
             ->addColumn('status', function($row){
             return $row->antar->status->name??'Belum Input';
             })
+            ->addColumn('detail', function($row){
+                $nama=$row->nama_customer?$row->nama_customer."-":"";
+            return $nama . $row->deskripsi;
+            })
             ->addColumn('tglproses', function($row){
             return $row->antar->created_at??'-';
             })
