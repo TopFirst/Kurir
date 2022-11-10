@@ -164,6 +164,9 @@ class HomeController extends Controller
                     ->addColumn('seller', function($row){
                             return $row->seller->nama??$row->hp_seller;
                     })
+                    ->addColumn('detail', function($row){
+                        return $row->nama_customer ."-". $row->deskripsi;
+                    })
                     ->addColumn('status', function($row){
                         return '<span class="badge badge-warning">Belum Input</span>';
                     })
@@ -201,6 +204,9 @@ class HomeController extends Controller
                     })
                     ->addColumn('seller', function($row){
                             return $row->seller->nama??$row->hp_seller;
+                    })
+                    ->addColumn('detail', function($row){
+                            return $row->nama_customer ."-". $row->deskripsi;
                     })
                     ->addColumn('status', function($row){
                         $stt='<span class="badge badge-warning">Belum Input</span>';

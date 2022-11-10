@@ -283,7 +283,7 @@ var cancel_table;
                 { data: 'id', name: 'id', orderable:false },
                 { data: 'kurirjemput', name: 'kurirjemput', orderable:false },
                 { data: 'seller', name: 'seller', orderable:false },
-                { data: 'deskripsi', name: 'deskripsi', orderable:false },
+                { data: 'detail', name: 'detail', orderable:false },
                 { data: 'status', name: 'status', orderable:false },
             ]
             
@@ -301,7 +301,7 @@ var cancel_table;
                 { data: 'id', name: 'id', orderable:false },
                 { data: 'kurirjemput', name: 'kurirjemput', orderable:false },
                 { data: 'seller', name: 'seller', orderable:false },
-                { data: 'deskripsi', name: 'deskripsi', orderable:false },
+                { data: 'detail', name: 'detail', orderable:false },
                 { data: 'talangan', name: 'talangan', orderable:false },
             ]
         });
