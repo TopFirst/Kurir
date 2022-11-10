@@ -54,7 +54,7 @@ class HomeController extends Controller
             ->with('id_baru', $id_baru)
             ->with('ongkir_dasar', $ongkir_dasar->parameter_value);
         }
-        elseif(Auth::user()->hasRole('Admin'))
+        elseif(Auth::user()->hasRole('Admin') || Auth::user()->hasRole('SubAdmin'))
         {
             // $jemputs = Tbljemput::latest()->take(5)->get();
 

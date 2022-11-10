@@ -52,7 +52,7 @@
                             <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
                             {{-- <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li> --}}
                         @else
-                            @if(Auth::user()->hasRole('Admin'))
+                            @if(!Auth::user()->hasRole('Kurir'))
                             <li><a class="nav-link" href="{{ route('transaksi.admin') }}">Halaman Admin</a></li>
                             @else
                             <li><a class="nav-link" href="{{ route('transaksi.index') }}">Daftar Transaksi</a></li>

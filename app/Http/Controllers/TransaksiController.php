@@ -39,10 +39,10 @@ class TransaksiController extends Controller
      */
     function __construct()
     {
-         $this->middleware('permission:transaksi-list|transaksi-create|transaksi-edit|transaksi-delete', ['only' => ['index','show','transaksikurir','json']]);
+         $this->middleware('permission:transaksi-list|transaksi-create|transaksi-edit|transaksi-delete', ['only' => ['index','show','transaksikurir','json','admin']]);
          $this->middleware('permission:transaksi-create', ['only' => ['create','store','update']]);
-         $this->middleware('permission:transaksi-edit', ['only' => ['edit','admin']]);
-         $this->middleware('permission:transaksi-delete', ['only' => ['destroy']]);
+         $this->middleware('permission:transaksi-edit', ['only' => ['edit']]);
+         $this->middleware('permission:transaksi-delete', ['only' => ['destroy','hapus','hapuskans']]);
     }
     /**
      * Display a listing of the resource.
@@ -336,7 +336,7 @@ class TransaksiController extends Controller
      */
     public function admin()
     {
-        if(Auth::user()->hasRole('Admin'))
+        if(!Auth::user()->hasRole('Kurir'))
         {
             $statuses = Status::all();
             $sellers=Seller::all();

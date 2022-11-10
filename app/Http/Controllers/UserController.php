@@ -98,7 +98,11 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::pluck('name','name')->all();
+        if(Auth::user()->hasRole('Admin'))
+            $roles = Role::pluck('name','name')->all();
+        else
+            $roles = Role::where('name','Kurir')->pluck('name','name')->all();
+
         return view('users.create',compact('roles'))
         ->with('title', 'Pengguna');
     }

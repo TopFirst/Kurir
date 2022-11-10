@@ -15,7 +15,7 @@
                     <div class="col-xs-12 col-sm-12 col-md-3 m-0">
                         <div class="form-group m-0">
                             <label for="cmbkurir" class="col-form-label">Kurir</label>
-                                <select name="user_id" id="cmbkurir" class="form-control form-control-sm select2" {{ Auth::user()->hasRole('Admin')?'':'disabled' }}>
+                                <select name="user_id" id="cmbkurir" class="form-control form-control-sm select2" {{ !Auth::user()->hasRole('Kurir')?'':'disabled' }}>
                                     <option value="" disabled>--Pilih Kurir--</option>
                                     @foreach($kurirs as $key=>$kurir)
                                     <option value="{{ $kurir->id }}" {{ $kurir->id==$id_pengguna?'selected':'' }}>
