@@ -71,8 +71,8 @@
             <hr>
             <div class="col-xs-12 col-sm-12 col-md-12">
 		        <div class="form-group">
-		            <strong>Talangan:</strong>
-		            <input type="number" min="0" name="talangan" class="form-control" placeholder="talangan" onkey step="1" required>
+		            <strong>Total:</strong>
+		            <input type="number" min="0" name="talangan" class="form-control" placeholder="total" onkey step="1" required>
 		        </div>
 		    </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
