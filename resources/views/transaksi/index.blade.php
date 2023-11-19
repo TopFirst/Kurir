@@ -229,19 +229,20 @@
                                 <tbody></tbody>
                                 <tfoot>
                                     <tr>
-                                        <th colspan="8" class="text-right">Total</th>
-                                        <th id="talangan"></th>
-                                        <th id="ongkir"></th>
-                                        <th></th>
-                                        <th></th>
+                                        <th colspan="8" class="text-right">Total Paket : </th>
+                                        <th colspan="4" id="totalPaket"></th>
                                     </tr>
                                     <tr>
-                                        <th colspan="8" class="align-middle">
-                                            <h5 class="text-right text-info">Grand Total</h5>
-                                        </th>
-                                        <th colspan="4">
-                                            <h3 id="sisa" class="text-info"></h3>
-                                        </th>
+                                        <th colspan="8" class="text-right">Total Talangan : </th>
+                                        <th colspan="4" id="talangan"></th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="8" class="text-right">Total Ongkir : </th>
+                                        <th colspan="4" id="ongkir"></th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="8" class="text-right">Grand Total : </th>
+                                        <th colspan="4" id="sisa"></th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -462,6 +463,7 @@
             $("#antaran").text(dat['antaran']);
             $("#grand_total").text(dat['grand_total']);
             $("#jumlahdata").text(dat['jumlahdata']);
+            $("#totalPaket").text(dat['jumlahdata']);
             // $("#jmlbaris").text('Jumlah baris : ' + dat['recordsTotal']);
             // console.log(dat['sisa']);
         });
